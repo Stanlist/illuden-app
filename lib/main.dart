@@ -13,7 +13,6 @@ void main() {
   FlutterBluePlus.setLogLevel(LogLevel.verbose, color: true);
   runApp(const IlludenApp());
 }
-
 class IlludenApp extends StatelessWidget {
   const IlludenApp({super.key});
 
