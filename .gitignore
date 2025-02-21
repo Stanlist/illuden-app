@@ -50,6 +50,7 @@ app.*.map.json
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.*
+/android/app/.cxx 
 
 
 # iOS/XCode related

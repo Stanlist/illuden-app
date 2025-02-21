@@ -1,2 +1,0 @@
-/Users/annashen/Desktop/code/illuden-app/android/app/.cxx/Debug/6x4s2i74/x86_64/CMakeFiles/edit_cache.dir
-/Users/annashen/Desktop/code/illuden-app/android/app/.cxx/Debug/6x4s2i74/x86_64/CMakeFiles/rebuild_cache.dir
