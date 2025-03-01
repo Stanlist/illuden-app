@@ -2,38 +2,27 @@ import 'package:equatable/equatable.dart';
 import 'module.dart';
 
 class LightsState extends Equatable {
+
   final Module module;
-  final bool isConnected;
+  final List<int> selectedModules;
+  LightsState({required this.module, this.selectedModules = const []});
 
-  const LightsState({
-    required this.module,
-    required this.isConnected,
-  });
-
-  // CopyWith method to create a new state with modified properties
-  LightsState copyWith({
-    Module? module,
-    bool? isConnected,
-  }) {
+  LightsState copyWith({Module? module, List<int>? selectedModules}) {
     return LightsState(
       module: module ?? this.module,
-      isConnected: isConnected ?? this.isConnected,
+      selectedModules: selectedModules ?? this.selectedModules,
     );
   }
+  void debugPrintState() {
+    print("LEDModule State: {");
+    print("  temperature: ${module.temperature}");
+    print("  LEDs: ${module.LEDs}");
+    print("  isON: ${module.isON}");
+    print("  isRGBmode: ${module.isRGBmode}");
+    print("  brightness: ${module.brightness}");
+    print("}");
+  }
   @override
-  List<Object?> get props => [module, isConnected]; // Implement the props getter
+  List<Object> get props => [module];
 }
 
-class LightsStateInitial extends LightsState {
-  LightsStateInitial() : super(
-    module: Module(
-      id: 'default-id',
-      label: 'LED Module',
-      isOn: false,
-      brightness: 0,
-      rgb: [0, 0, 0],
-      temperature: 2700.0,
-    ),
-    isConnected: false,
-  );
-}
