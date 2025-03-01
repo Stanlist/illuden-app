@@ -5,7 +5,6 @@ import 'module.dart';
 
 // part 'lights_state.dart';
 
-
 class LightsCubit extends Cubit<LightsState> {
   LightsCubit(Module module) : super(LightsState(module: module));
 
@@ -47,8 +46,35 @@ class LightsCubit extends Cubit<LightsState> {
       module: state.module.copyWith(isConnected: isConnected),
     ));
   }
-  void updateSelectedModules(List<int> selectedModules) {
-    emit(state.copyWith(selectedModules: selectedModules));
-    state.debugPrintState();
+  void overwriteSelectedModules(List<int> newSelection) {
+    print("new Selection: $newSelection");
+    emit(state.copyWith(selectedModules: newSelection));
+    // print("selected Modules: ${state.selectedModules}");
+  }
+
+  void updateSelectedModules(int section) {
+    final Set<int> centerSection = {0, 1, 2, 3, 4};
+    List<int> updatedSelections = List.from(state.selectedModules);
+
+      // Get the current selection state
+      bool isCenterTapped = centerSection.contains(section);
+      bool isCenterSelected = state.selectedModules.any(centerSection.contains);
+
+      if (isCenterTapped) {
+        if (isCenterSelected) {
+        updatedSelections.removeWhere(centerSection.contains); // Deselect all center sections
+        } else {
+          updatedSelections.addAll(centerSection); // Select all center sections
+        }
+      } else {
+        // Toggle normal section selection
+      if (updatedSelections.contains(section)) {
+        updatedSelections.remove(section);
+        } else {
+        updatedSelections.add(section);
+        }
+      }
+    print("Selected Modules: ${updatedSelections}");
+    emit(state.copyWith(selectedModules: updatedSelections));
   }
 }

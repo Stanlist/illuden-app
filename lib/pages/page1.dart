@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:illuden/widgets/bluetooth/cubit/bluetooth_single_write.dart';
 import 'package:illuden/widgets/bluetooth/bluetooth_bar_view.dart';
 import 'page2.dart';
+import 'package:illuden/widgets/selector/selector_view.dart';
 
 class Page1 extends StatelessWidget {
   const Page1({super.key});
@@ -16,6 +17,7 @@ class Page1 extends StatelessWidget {
       body: Column(
         children: [
           BluetoothBarView(),
+          SelectorView(),
           Center(
             child: Column(
               children: [

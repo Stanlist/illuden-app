@@ -7,7 +7,10 @@ class LightsState extends Equatable {
   final List<int> selectedModules;
   LightsState({required this.module, this.selectedModules = const []});
 
-  LightsState copyWith({Module? module, List<int>? selectedModules}) {
+  LightsState copyWith({
+      Module? module, 
+      List<int>? selectedModules
+    }) {
     return LightsState(
       module: module ?? this.module,
       selectedModules: selectedModules ?? this.selectedModules,
@@ -23,6 +26,6 @@ class LightsState extends Equatable {
     print("}");
   }
   @override
-  List<Object> get props => [module];
+  List<Object> get props => [module,selectedModules];
 }
 
