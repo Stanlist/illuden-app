@@ -18,17 +18,15 @@ class Page1 extends StatelessWidget {
       body: Column(
         children: [
           BluetoothBarView(),
-          SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SelectorView(),
-                  BrightnessView(),
-                  PowerView(),
-                ],
-              ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SelectorView(),
+                BrightnessView(),
+                PowerView(),
+              ],
             ),
           ),
           Center(
