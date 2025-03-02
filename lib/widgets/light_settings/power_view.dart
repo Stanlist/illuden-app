@@ -42,16 +42,13 @@ class PowerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:  [
-          // const Text("Power", style: TextStyle(fontSize: 16)),
-          Expanded(child: Container()), 
-          const PowerSwitch(),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children:  [
+        // const Text("Power", style: TextStyle(fontSize: 16)),
+        Expanded(child: Container()), 
+        const PowerSwitch(),
+      ],
     );
   }
 }
