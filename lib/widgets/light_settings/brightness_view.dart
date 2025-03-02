@@ -81,7 +81,7 @@ class BrightnessSlider extends StatelessWidget {
                 ? (value) => context.read<LightsCubit>().setBrightness(value.toInt())
                 : null, // Prevent changes if disabled
           ),
-        ), // <-- Fixed missing bracket here
+        ), 
       ],
     );
   }
