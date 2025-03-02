@@ -93,7 +93,7 @@ class RadialLayerPainter extends CustomPainter {
 
   void _drawSection(Canvas canvas, double centerX, double centerY, double radiusStart, double radiusEnd, double startAngle, double sweepAngle, int section) {
     final Paint paint = Paint()
-      ..color = selectedModules.contains(section) ? Colors.blue : Colors.grey
+      ..color = selectedModules.contains(section) ? Colors.deepPurple : Colors.grey
       ..style = PaintingStyle.fill;
 
     Path path = Path()

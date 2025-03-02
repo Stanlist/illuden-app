@@ -4,7 +4,8 @@ import 'package:illuden/widgets/bluetooth/cubit/bluetooth_single_write.dart';
 import 'package:illuden/widgets/bluetooth/bluetooth_bar_view.dart';
 import 'page2.dart';
 import 'package:illuden/widgets/selector/selector_view.dart';
-import 'package:illuden/widgets/light_settings/brightness_slider.dart';
+import 'package:illuden/widgets/light_settings/brightness_view.dart';
+import 'package:illuden/widgets/light_settings/power_view.dart';
 class Page1 extends StatelessWidget {
   const Page1({super.key});
 
@@ -19,12 +20,13 @@ class Page1 extends StatelessWidget {
           BluetoothBarView(),
           SelectorView(),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SelectorView(),
-                SyncfusionSliderWidget()
+                BrightnessView(),
+                PowerView(),
               ],
             ),
           ),
