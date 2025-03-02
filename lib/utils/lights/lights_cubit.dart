@@ -79,4 +79,10 @@ class LightsCubit extends Cubit<LightsState> {
     print("Selected Modules: ${updatedSelections}");
     emit(state.copyWith(selectedModules: updatedSelections));
   }
+  void saveState() {
+    // for presets (low)
+  }
+  void writeBluetooth() {
+    // use state.module.<var> and state.selectedAddresses to send off thingies to bluetooth
+  }
 }
