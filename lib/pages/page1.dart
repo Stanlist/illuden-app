@@ -18,7 +18,7 @@ class Page1 extends StatelessWidget {
       body: Column(
         children: [
           BluetoothBarView(),
-          SelectorView(),
+          // SelectorView(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
