@@ -77,12 +77,33 @@ class BrightnessSlider extends StatelessWidget {
             value: brightness.toDouble(),
             showTicks: false,
             showLabels: false,
+            trackShape: ModRightPadding(),
             onChanged: isON
                 ? (value) => context.read<LightsCubit>().setBrightness(value.toInt())
                 : null, // Prevent changes if disabled
           ),
         ), 
       ],
+    );
+  }
+}
+
+class ModRightPadding extends SfTrackShape {
+  @override
+  Rect getPreferredRect(
+    RenderBox parentBox,
+    dynamic themeData, 
+    Offset offset, 
+    {bool? isActive}
+  ) {
+    final Rect defaultRect = super.getPreferredRect(parentBox, themeData, offset, isActive: isActive);
+    
+    // Reduce only the right padding
+    return Rect.fromLTRB(
+      defaultRect.left, 
+      defaultRect.top, 
+      defaultRect.right + 27, // Shift left by 10 to remove right padding
+      defaultRect.bottom
     );
   }
 }
