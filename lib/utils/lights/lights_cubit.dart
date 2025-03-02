@@ -2,7 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'lights_state.dart';
 import 'module.dart';
-
+import '../../assets/constants.dart';
 // part 'lights_state.dart';
 
 class LightsCubit extends Cubit<LightsState> {
@@ -49,18 +49,18 @@ class LightsCubit extends Cubit<LightsState> {
     ));
   }
   void overwriteSelectedModules(List<int> newSelection) {
-    print("new Selection: $newSelection");
-    emit(state.copyWith(selectedModules: newSelection));
-    // print("selected Modules: ${state.selectedModules}");
+    print("new selection: $newSelection");
+    emit(state.copyWith(selectedSections: newSelection));
+    // print("selected Sections: ${state.selectedSections}");
   }
 
   void updateSelectedModules(int section) {
     final Set<int> centerSection = {0, 1, 2, 3, 4};
-    List<int> updatedSelections = List.from(state.selectedModules);
+    List<int> updatedSelections = List.from(state.selectedSections);
 
       // Get the current selection state
       bool isCenterTapped = centerSection.contains(section);
-      bool isCenterSelected = state.selectedModules.any(centerSection.contains);
+      bool isCenterSelected = state.selectedSections.any(centerSection.contains);
 
       if (isCenterTapped) {
         if (isCenterSelected) {
@@ -76,8 +76,28 @@ class LightsCubit extends Cubit<LightsState> {
         updatedSelections.add(section);
         }
       }
-    print("Selected Modules: ${updatedSelections}");
-    emit(state.copyWith(selectedModules: updatedSelections));
+    List<int> updatedAddresses = sectionsToAddresses(updatedSelections);
+    print("Emitting:\n "
+      "sections = $updatedSelections\n" 
+      "addresses = $updatedAddresses \n"
+      "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
+    ); 
+
+    emit(state.copyWith(
+      selectedSections: updatedSelections, 
+      selectedAddresses: updatedAddresses
+    ));
+  }
+
+  List<int> sectionsToAddresses(List<int> sections) {
+    List<int> selectedAddresses = [];
+
+    for (int section in sections) {
+      if (Constants.sectionMap.containsKey(section)) {
+        selectedAddresses.addAll(Constants.sectionMap[section]!);
+      }
+    }
+    return selectedAddresses;
   }
   void saveState() {
     // for presets (low)
