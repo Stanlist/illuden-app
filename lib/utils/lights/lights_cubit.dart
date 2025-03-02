@@ -19,6 +19,7 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(brightness: brightness),
     ));
+    print(state.module.brightness);
   }
 
   void switchMode(bool isRGB) {
