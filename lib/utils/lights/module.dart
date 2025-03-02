@@ -10,7 +10,7 @@ class Module extends Equatable {
   Module({
     this.temperature = 0.0,
     Map<String, dynamic>? LEDs,
-    this.isON = false,
+    this.isON = true,
     this.isRGBmode = false,
     this.brightness = 0,
   }) : LEDs = LEDs ?? {
