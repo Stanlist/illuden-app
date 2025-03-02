@@ -10,7 +10,7 @@ class SelectorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LightsCubit, LightsState>(
       builder: (context, state) {
-        List<int> selectedModules = state.selectedModules;
+        List<int> selectedSections = state.selectedSections;
         return Center(
           child: GestureDetector(
             onTapDown: (details) {
@@ -18,7 +18,7 @@ class SelectorView extends StatelessWidget {
             },
             child: CustomPaint(
               size: Size(300, 300),
-              painter: RadialLayerPainter(selectedModules: selectedModules),
+              painter: RadialLayerPainter(selectedSections: selectedSections),
             ),
           ),
         );
@@ -60,9 +60,9 @@ class SelectorView extends StatelessWidget {
 }
 
 class RadialLayerPainter extends CustomPainter {
-  final List<int> selectedModules;
+  final List<int> selectedSections;
 
-  RadialLayerPainter({required this.selectedModules});
+  RadialLayerPainter({required this.selectedSections});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -93,7 +93,7 @@ class RadialLayerPainter extends CustomPainter {
 
   void _drawSection(Canvas canvas, double centerX, double centerY, double radiusStart, double radiusEnd, double startAngle, double sweepAngle, int section) {
     final Paint paint = Paint()
-      ..color = selectedModules.contains(section) ? Colors.deepPurple : Colors.grey
+      ..color = selectedSections.contains(section) ? Colors.deepPurple : Colors.grey
       ..style = PaintingStyle.fill;
 
     Path path = Path()
