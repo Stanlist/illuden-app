@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:illuden/widgets/bluetooth_bar/bloc/bluetooth_cubit.dart';
+import 'package:illuden/widgets/bluetooth/cubit/bluetooth_cubit.dart';
 
 class BluetoothBarView extends StatelessWidget {
   const BluetoothBarView({super.key});

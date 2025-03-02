@@ -12,15 +12,21 @@ class BluetoothState {
   final BluetoothAdapterState adapterState;
   final BluetoothConnectionState connectionState;
   final BluetoothDevice? device;
-
   BluetoothState({this.isScanning = false, this.isConnected = false, this.device, this.adapterState = BluetoothAdapterState.unknown, this.connectionState = BluetoothConnectionState.disconnected});
 }
 
-// Bluetooth Cubit for handling bluetooth connection to light
+// Bluetooth Cubit for handling bluetooth connection, read and writing
 class BluetoothCubit extends Cubit<BluetoothState> {
   final String targetDeviceName = "HUNTER2_DEMO"; // Change this to your device's name
   late StreamSubscription<BluetoothAdapterState> _deviceStateSubscription;
   late StreamSubscription<BluetoothConnectionState> _connectionStateSubscription;
+
+  // Bluetooth services 
+  late List<BluetoothService>? _services;
+  late BluetoothService? _rwService;
+  late BluetoothCharacteristic? _readCharacteristic;
+  late BluetoothCharacteristic? _writeCharacteristic;
+
   Timer? _pollingTimer;
 
   // Constructor for initial state
@@ -68,6 +74,7 @@ class BluetoothCubit extends Cubit<BluetoothState> {
           for (ScanResult result in results) {
             if (result.device.advName == targetDeviceName) {
               print("Found device: ${result.device.advName} with remote ID: ${result.device.remoteId}");
+              emit(BluetoothState(device: result.device));
               _connectToDevice(result.device);
             }
           }
@@ -91,9 +98,22 @@ class BluetoothCubit extends Cubit<BluetoothState> {
             _startScan();
           });
         } else if (state == BluetoothConnectionState.connected) {
-          print("Device connected. Starting polling...");
+          print("Device connected.");
           FlutterBluePlus.stopScan();
           emit(BluetoothState(isConnected: true, device: device, isScanning: false));
+
+          // Poll for bluetooth services
+          _services = await device.discoverServices();
+          for (BluetoothService service in _services!) {
+            print("Service: ${service.uuid}");
+            if (service.uuid == Guid("00ff")) {
+              _rwService = service;
+              _readCharacteristic = service.characteristics.firstWhere((c) => c.uuid == Guid("FF01"));
+              _writeCharacteristic = service.characteristics.firstWhere((c) => c.uuid == Guid("FF02"));
+              return;
+            }
+          }
+          print("Missing service 0x00FF!!!!");
         }
       });
       
@@ -114,5 +134,17 @@ class BluetoothCubit extends Cubit<BluetoothState> {
       _pollingTimer = null;
       emit(BluetoothState(isConnected: false));
     }
+  }
+  
+  // Write to the device
+  void write() async{
+    print("Trying to write to device...");
+    if (state.isConnected && _writeCharacteristic != null) {
+      await _writeCharacteristic!.write([0x1, 0x2, 0x3, 0x4, 0x5, 0x6]);
+      print("Data written to device.");
+    } else {
+      print("Device not connected or write characteristic not found.");
+    }
+    // emit(BluetoothState());
   }
 }

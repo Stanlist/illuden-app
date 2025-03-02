@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:illuden/widgets/bluetooth_bar/bloc/bluetooth_page.dart';
+import 'package:illuden/widgets/bluetooth/cubit/bluetooth_single_write.dart';
+import 'package:illuden/widgets/bluetooth/bluetooth_bar_view.dart';
 import 'page2.dart';
 
 class Page1 extends StatelessWidget {
@@ -14,16 +15,21 @@ class Page1 extends StatelessWidget {
       ),
       body: Column(
         children: [
-          BluetoothPage(),
+          BluetoothBarView(),
           Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Page2()),
-                );
-              },
-              child: const Text('Go to Page 2'),
+            child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Page2()),
+                    );
+                  },
+                  child: const Text('Go to Page 2'),
+                ),
+                BluetoothWritePage(),
+              ],
             ),
           ),
         ],
