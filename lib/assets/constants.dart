@@ -1,5 +1,3 @@
-// import 'package:flutter/material.dart';
-
 class Constants {
   static Map<int, List<int>> sectionMap = {
     0:  [16], // inner
@@ -19,5 +17,7 @@ class Constants {
     14: [52, 53, 54, 55],
     16: [56, 57, 58, 59, 60], // top 
   };
+
+  static List<int> allAddresses = List<int>.generate(45, (i) => i + 16);
 }
 

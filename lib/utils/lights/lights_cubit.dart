@@ -1,14 +1,13 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:illuden/widgets/bluetooth/cubit/bluetooth_cubit.dart';
 import 'lights_state.dart';
 import 'module.dart';
 import '../../assets/constants.dart';
-// part 'lights_state.dart';
 
 class LightsCubit extends Cubit<LightsState> {
   final BluetoothCubit _bluetooth;
-  LightsCubit(Module module, this._bluetooth) : super(LightsState(module: module));
+  LightsCubit(Module module, this._bluetooth)
+      : super(LightsState(module: module));
 
   void togglePower() {
     emit(state.copyWith(
@@ -50,6 +49,7 @@ class LightsCubit extends Cubit<LightsState> {
       module: state.module.copyWith(isConnected: isConnected),
     ));
   }
+
   void overwriteSelectedModules(List<int> newSelection) {
     print("new selection: $newSelection");
     emit(state.copyWith(selectedSections: newSelection));
@@ -60,35 +60,35 @@ class LightsCubit extends Cubit<LightsState> {
     final Set<int> centerSection = {0, 1, 2, 3, 4};
     List<int> updatedSelections = List.from(state.selectedSections);
 
-      // Get the current selection state
-      bool isCenterTapped = centerSection.contains(section);
-      bool isCenterSelected = state.selectedSections.any(centerSection.contains);
+    // Get the current selection state
+    bool isCenterTapped = centerSection.contains(section);
+    bool isCenterSelected = state.selectedSections.any(centerSection.contains);
 
-      if (isCenterTapped) {
-        if (isCenterSelected) {
-        updatedSelections.removeWhere(centerSection.contains); // Deselect all center sections
-        } else {
-          updatedSelections.addAll(centerSection); // Select all center sections
-        }
+    if (isCenterTapped) {
+      if (isCenterSelected) {
+        updatedSelections.removeWhere(
+            centerSection.contains); // Deselect all center sections
       } else {
-        // Toggle normal section selection
+        updatedSelections.addAll(centerSection); // Select all center sections
+      }
+    } else {
+      // Toggle normal section selection
       if (updatedSelections.contains(section)) {
         updatedSelections.remove(section);
-        } else {
+      } else {
         updatedSelections.add(section);
-        }
       }
+    }
     List<int> updatedAddresses = sectionsToAddresses(updatedSelections);
     print("Emitting:\n "
-      "sections = $updatedSelections\n" 
-      "addresses = $updatedAddresses \n"
-      "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
-    ); 
+        "sections = $updatedSelections\n"
+        "addresses = $updatedAddresses \n"
+        "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
+        );
 
     emit(state.copyWith(
-      selectedSections: updatedSelections, 
-      selectedAddresses: updatedAddresses
-    ));
+        selectedSections: updatedSelections,
+        selectedAddresses: updatedAddresses));
   }
 
   List<int> sectionsToAddresses(List<int> sections) {
@@ -101,26 +101,41 @@ class LightsCubit extends Cubit<LightsState> {
     }
     return selectedAddresses;
   }
+
   void saveState() {
     // for presets (low)
   }
 
   // Takes the current module state and write to bluetooth
-  // Blanket applies to all LED modules
   void writeBluetooth() {
     List<int> selectedAddresses = state.selectedAddresses;
     Map<String, dynamic> ledValues = state.module.LEDs;
 
     // call BluetoothCubit write function to perform identical write
-    _bluetooth.write(
-      3,
-      selectedAddresses,
-      ledValues['2700'],
-      ledValues['5000'],
-      ledValues['6500'],
-      ledValues['RGB'][0],
-      ledValues['RGB'][1],
-      ledValues['RGB'][2],
-    );
+    if (state.module.isON) {
+      bool isRGB = state.module.isRGBmode;
+      _bluetooth.write(
+        3,
+        selectedAddresses,
+        isRGB ? 0 : ledValues['2700'],
+        isRGB ? 0 : ledValues['5000'],
+        isRGB ? 0 : ledValues['6500'],
+        isRGB ? ledValues['RGB'][0] : 0,
+        isRGB ? ledValues['RGB'][1] : 0,
+        isRGB ? ledValues['RGB'][2] : 0,
+      );
+    } else {
+      // If module is off, turn off all LEDs
+      _bluetooth.write(
+        3,
+        Constants.allAddresses,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      );
+    }
   }
 }
