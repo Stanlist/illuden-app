@@ -31,7 +31,7 @@ class BluetoothSingleWrite extends StatelessWidget {
                   // Get the bluetooth cubit to write to the device
                   final cubit = context.read<BluetoothCubit>();
                   print("Writing to bluetooth");
-                  cubit.write(); // Example data
+                  cubit.write(3,[16,17,18,19,20],20,20,20,0,0,0); // Example data
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Data written successfully')),
                   );

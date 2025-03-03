@@ -23,7 +23,7 @@ class IlludenApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: ((context) => BluetoothCubit())),
-        BlocProvider(create: ((context) => LightsCubit(Module()))),
+        BlocProvider(create: ((context) => LightsCubit(Module(), context.read<BluetoothCubit>()))),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

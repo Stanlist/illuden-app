@@ -1,12 +1,14 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:illuden/widgets/bluetooth/cubit/bluetooth_cubit.dart';
 import 'lights_state.dart';
 import 'module.dart';
 import '../../assets/constants.dart';
 // part 'lights_state.dart';
 
 class LightsCubit extends Cubit<LightsState> {
-  LightsCubit(Module module) : super(LightsState(module: module));
+  final BluetoothCubit _bluetooth;
+  LightsCubit(Module module, this._bluetooth) : super(LightsState(module: module));
 
   void togglePower() {
     emit(state.copyWith(
@@ -102,7 +104,23 @@ class LightsCubit extends Cubit<LightsState> {
   void saveState() {
     // for presets (low)
   }
+
+  // Takes the current module state and write to bluetooth
+  // Blanket applies to all LED modules
   void writeBluetooth() {
-    // use state.module.<var> and state.selectedAddresses to send off thingies to bluetooth
+    List<int> selectedAddresses = state.selectedAddresses;
+    Map<String, dynamic> ledValues = state.module.LEDs;
+
+    // call BluetoothCubit write function to perform identical write
+    _bluetooth.write(
+      3,
+      selectedAddresses,
+      ledValues['2700'],
+      ledValues['5000'],
+      ledValues['6500'],
+      ledValues['RGB'][0],
+      ledValues['RGB'][1],
+      ledValues['RGB'][2],
+    );
   }
 }
