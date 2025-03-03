@@ -12,8 +12,8 @@ class TemperatureView extends StatelessWidget {
       builder: (context, state) {
         final int temperature = state.module.temperature;
         final bool isON = state.module.isON; // Get power state
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        return SizedBox(
+          width: 300,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center, // Center align everything
             children: [
