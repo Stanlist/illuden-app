@@ -4,16 +4,24 @@ import 'module.dart';
 class LightsState extends Equatable {
 
   final Module module;
-  final List<int> selectedModules;
-  LightsState({required this.module, this.selectedModules = const []});
+  final List<int> selectedSections;
+  final List<int> selectedAddresses;
+  LightsState({
+    required this.module,
+    this.selectedSections = const <int>[],
+    this.selectedAddresses = const <int>[],
+  });
+
 
   LightsState copyWith({
-      Module? module, 
-      List<int>? selectedModules
-    }) {
+    Module? module, 
+    List<int>? selectedSections,
+    List<int>? selectedAddresses, 
+  }) {
     return LightsState(
       module: module ?? this.module,
-      selectedModules: selectedModules ?? this.selectedModules,
+      selectedSections: selectedSections ?? List.from(this.selectedSections),
+      selectedAddresses: selectedAddresses ?? List.from(this.selectedAddresses),
     );
   }
   void debugPrintState() {
@@ -26,6 +34,6 @@ class LightsState extends Equatable {
     print("}");
   }
   @override
-  List<Object> get props => [module,selectedModules];
+  List<Object> get props => [module, selectedSections, selectedAddresses];
 }
 
