@@ -10,9 +10,8 @@ class TemperatureView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LightsCubit, LightsState>(
       builder: (context, state) {
-        final double temperature = state.module.temperature;
+        final int temperature = state.module.temperature;
         final bool isON = state.module.isON; // Get power state
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
@@ -21,11 +20,13 @@ class TemperatureView extends StatelessWidget {
               /// Centered Temperature Slider with Icon
               TemperatureGage(
                 temperature: temperature,
-                isON: isON,
                 onTemperatureChanged: (value) {
                   double step = 10;
                   value = (value / step).round() * step;
-                  context.read<LightsCubit>().updateTemperature(value);
+                  context.read<LightsCubit>().updateTemperature(value.toInt());
+                  if(!isON){
+                    context.read<LightsCubit>().togglePower();
+                  }
                 },
               ),
             ],
@@ -36,9 +37,8 @@ class TemperatureView extends StatelessWidget {
   }
 }
 class TemperatureLabel extends StatelessWidget {
-  final double temperature;
+  final int temperature;
   const TemperatureLabel({super.key, required this.temperature});
-
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -53,14 +53,12 @@ class TemperatureLabel extends StatelessWidget {
 }
 
 class TemperatureGage extends StatelessWidget {
-  final double temperature;
-  final bool isON;
+  final int temperature;
   final ValueChanged<double> onTemperatureChanged;
 
   const TemperatureGage({
     super.key,
     required this.temperature,
-    required this.isON,
     required this.onTemperatureChanged,
   });
 
@@ -85,7 +83,7 @@ class TemperatureGage extends StatelessWidget {
           ),
           pointers: <GaugePointer>[
             RangePointer(
-              value: temperature,
+              value: temperature.toDouble(),
               cornerStyle: CornerStyle.bothCurve,
               width: 10,
               sizeUnit: GaugeSizeUnit.logicalPixel,
@@ -98,7 +96,7 @@ class TemperatureGage extends StatelessWidget {
               ),
             ),
             MarkerPointer(
-              value: temperature,
+              value: temperature.toDouble(),
               onValueChanged: onTemperatureChanged,
               enableDragging: true,
               markerHeight: 25,

@@ -20,7 +20,7 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(brightness: brightness),
     ));
-    print(state.module.brightness);
+    print("brightness: ${state.module.brightness}");
   }
 
   void switchMode(bool isRGB) {
@@ -37,10 +37,11 @@ class LightsCubit extends Cubit<LightsState> {
     ));
   }
 
-  void updateTemperature(double temp) {
+  void updateTemperature(int temp) {
     emit(state.copyWith(
       module: state.module.copyWith(temperature: temp),
     ));
+    print("temp: ${state.module.temperature}");
   }
 
   void updateConnectionStatus(bool isConnected) {
