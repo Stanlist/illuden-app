@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:illuden/widgets/light_settings/temperature_view.dart';
+import 'package:illuden/widgets/light_settings/power_view.dart';
+import 'package:illuden/widgets/light_settings/brightness_view.dart';
+import 'package:illuden/widgets/body_view.dart';
 class Page2 extends StatelessWidget {
   const Page2({super.key});
 
@@ -9,11 +12,12 @@ class Page2 extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Page 2'),
       ),
-      body: const Center(
-        child: Text(
-          'Page 2 - Placeholder Content',
-          style: TextStyle(fontSize: 24),
-        ),
+      body: BodyView(
+      children: [
+        TemperatureView(),
+        BrightnessView(),
+        PowerView(),
+      ],
       ),
     );
   }

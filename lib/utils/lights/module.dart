@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class Module extends Equatable {
-  double temperature;
+  int temperature;
   Map<String, dynamic> LEDs;
   bool isON;
   bool isRGBmode;
   int brightness;
 
   Module({
-    this.temperature = 0.0,
+    this.temperature = 2700,
     Map<String, dynamic>? LEDs,
     this.isON = true,
     this.isRGBmode = false,
@@ -21,7 +21,7 @@ class Module extends Equatable {
         };
   Module copyWith({
     List<int>? selectedAddresses,
-    double? temperature,
+    int? temperature,
     Map<String, dynamic>? LEDs,
     bool? isON,
     bool? isRGBmode,
