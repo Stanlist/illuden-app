@@ -21,8 +21,14 @@ class TemperatureView extends StatelessWidget {
               TemperatureGage(
                 temperature: temperature,
                 onTemperatureChanged: (value) {
-                  double step = 10;
+                  double step = 20;
                   value = (value / step).round() * step;
+                    // If close to min or max, snap to the boundary
+                  if ((6500 - value) < (step*0.8)) {
+                    value = 6500;
+                  } else if ((value - 2700) < (step*0.8)) {
+                    value = 2700;
+                  }
                   context.read<LightsCubit>().updateTemperature(value.toInt());
                   if(!isON){
                     context.read<LightsCubit>().togglePower();
