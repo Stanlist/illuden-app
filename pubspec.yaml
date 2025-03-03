@@ -40,7 +40,8 @@ dependencies:
 
   equatable: ^2.0.5
   syncfusion_flutter_sliders: ^28.2.7
-  flutter_switch: ^0.3.2
+  # flutter_switch: ^0.3.2
+  syncfusion_flutter_gauges: ^28.2.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
