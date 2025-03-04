@@ -19,5 +19,7 @@ class Constants {
   };
 
   static List<int> allAddresses = List<int>.generate(45, (i) => i + 16);
+  static double selectorWidth = 300;
+  static double selectorHeight = 350;
 }
 

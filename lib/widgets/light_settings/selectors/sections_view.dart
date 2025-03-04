@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../assets/constants.dart';
+import '../../../utils/lights/lights.dart';
 
-import '../../utils/lights/lights.dart';
 
-
-class SelectorView extends StatelessWidget {
+class SectionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LightsCubit, LightsState>(
       builder: (context, state) {
         List<int> selectedSections = state.selectedSections;
         return Center(
-          child: GestureDetector(
-            onTapDown: (details) {
-              _onTap(context, details.localPosition);
-            },
-            child: CustomPaint(
-              size: Size(300, 300),
-              painter: RadialLayerPainter(selectedSections: selectedSections),
+          child: SizedBox(
+            width: Constants.selectorWidth,
+            height: Constants.selectorHeight,
+            child: GestureDetector(
+              onTapDown: (details) {
+                _onTap(context, details.localPosition);
+              },
+              child: CustomPaint(
+                size: Size(Constants.selectorWidth, Constants.selectorWidth),
+                painter: RadialLayerPainter(selectedSections: selectedSections),
+              ),
             ),
           ),
         );
@@ -108,5 +112,3 @@ class RadialLayerPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-
-
