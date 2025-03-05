@@ -23,3 +23,59 @@ class BluetoothBarView extends StatelessWidget {
     );
   }
 }
+
+
+
+class BluetoothView extends StatelessWidget {
+  const BluetoothView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BluetoothCubit, BluetoothState>(
+      builder: (context, state) {
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerHigh,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: BluetoothText(state: state),
+          );
+      },
+    );
+  }
+}
+class BluetoothText extends StatelessWidget {
+  final BluetoothState state;
+  
+  const BluetoothText({super.key, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 14.0),
+        children: [
+          const TextSpan(
+            text: 'Bluetooth: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: '${state.device?.advName.toString()}\n'),
+          const TextSpan(
+            text: 'Connected: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: '${state.isConnected}, '),
+          const TextSpan(
+            text: 'Scanning: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: '${state.isScanning}'),
+        ],
+      ),
+    );
+  }
+}
+
+

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../utils/lights/lights.dart';
+import '../../../utils/lights/lights.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-
+import '../../../assets/constants.dart';
 class TemperatureView extends StatelessWidget {
   const TemperatureView({super.key});
 
@@ -12,30 +12,27 @@ class TemperatureView extends StatelessWidget {
       builder: (context, state) {
         final int temperature = state.module.temperature;
         final bool isON = state.module.isON; // Get power state
-        return SizedBox(
-          width: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // Center align everything
-            children: [
-              /// Centered Temperature Slider with Icon
-              TemperatureGage(
-                temperature: temperature,
-                onTemperatureChanged: (value) {
-                  double step = 20;
-                  value = (value / step).round() * step;
-                    // If close to min or max, snap to the boundary
-                  if ((6500 - value) < (step*0.8)) {
-                    value = 6500;
-                  } else if ((value - 2700) < (step*0.8)) {
-                    value = 2700;
-                  }
-                  context.read<LightsCubit>().updateTemperature(value.toInt());
-                  if(!isON){
-                    context.read<LightsCubit>().togglePower();
-                  }
-                },
-              ),
-            ],
+        return Center(
+          child: SizedBox(
+            width: Constants.selectorWidth,
+            height: Constants.selectorHeight,
+            child: TemperatureGage(
+              temperature: temperature,
+              onTemperatureChanged: (value) {
+                double step = 20;
+                value = (value / step).round() * step;
+                  // If close to min or max, snap to the boundary
+                if ((6500 - value) < (step*0.8)) {
+                  value = 6500;
+                } else if ((value - 2700) < (step*0.8)) {
+                  value = 2700;
+                }
+                context.read<LightsCubit>().updateTemperature(value.toInt());
+                if(!isON){
+                  context.read<LightsCubit>().togglePower();
+                }
+              },
+            ),
           ),
         );
       },

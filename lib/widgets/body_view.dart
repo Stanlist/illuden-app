@@ -8,9 +8,9 @@ class BodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Flexible(
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0).add(EdgeInsets.symmetric(horizontal: 0.0)),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: PageWidgets(children: children),
