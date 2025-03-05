@@ -4,53 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../assets/constants.dart';
 
-// class BulkSelectToggle extends StatefulWidget {
-//   final List<String> labels;
-
-//   const BulkSelectToggle({
-//     Key? key,
-//     required this.labels,
-//   }) : super(key: key);
-
-//   @override
-//   _ToggleButtonGroupState createState() => _ToggleButtonGroupState();
-// }
-
-// class _ToggleButtonGroupState extends State<BulkSelectToggle> {
-//   late List<bool> isSelected;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     isSelected = List<bool>.filled(widget.labels.length, false);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ToggleButtons(
-//       color: Colors.black.withOpacity(0.60),
-//       selectedColor: Theme.of(context).colorScheme.primary,
-//       selectedBorderColor: Theme.of(context).colorScheme.primary,
-//       fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.08),
-//       splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.12),
-//       hoverColor: Theme.of(context).colorScheme.primary.withOpacity(0.04),
-//       borderRadius: BorderRadius.circular(4.0),
-//       constraints: const BoxConstraints(minHeight: 36.0),
-//       isSelected: isSelected,
-//       onPressed: (index) {
-//         setState(() {
-//           isSelected[index] = !isSelected[index];
-//         });
-//       },
-//       children: widget.labels
-//           .map((label) => Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-//                 child: Text(label),
-//               ))
-//           .toList(),
-//     );
-//   }
-// }
 
 class BulkSelectToggle extends StatelessWidget {
   const BulkSelectToggle({Key? key}) : super(key: key);
