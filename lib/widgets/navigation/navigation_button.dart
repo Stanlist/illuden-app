@@ -13,6 +13,7 @@ class NavigationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      
       onPressed: () {
         Navigator.push(
           context,
@@ -29,12 +30,21 @@ class NavigationButton extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.primary,  
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,   
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
         textStyle: TextStyle(fontSize: 14.0),
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-        minimumSize: Size(90, 40),
+        minimumSize: Size(80, 36.0),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.primary, // Outline color
+        )
+      ).merge(
+    ButtonStyle(
+      overlayColor: MaterialStateProperty.all(
+        Theme.of(context).colorScheme.primaryFixedDim, // Splash color
       ),
+    ),
+  ),
       child: Text(text),
     );
   }

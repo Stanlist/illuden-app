@@ -91,7 +91,15 @@ class LightsCubit extends Cubit<LightsState> {
         selectedSections: updatedSelections,
         selectedAddresses: updatedAddresses));
   }
+  void selectAll() {
+      emit(state.copyWith(
+        selectedSections: List<int>.from(Constants.allSections),
+        selectedAddresses: sectionsToAddresses(Constants.allSections)));
+  }
 
+  void deselectAll() {
+    emit(state.copyWith(selectedSections: []));
+  }
   List<int> sectionsToAddresses(List<int> sections) {
     List<int> selectedAddresses = [];
 

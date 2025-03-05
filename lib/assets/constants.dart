@@ -17,7 +17,9 @@ class Constants {
     14: [52, 53, 54, 55],
     16: [56, 57, 58, 59, 60], // top 
   };
-
+  static int totalModules = 45;
+  static int totalSections = 17;
+  static List<int> allSections = List.generate(17, (index) => index);
   static List<int> allAddresses = List<int>.generate(45, (i) => i + 16);
   static double selectorWidth = 300;
   static double selectorHeight = 350;
