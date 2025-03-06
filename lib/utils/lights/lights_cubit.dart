@@ -62,6 +62,8 @@ class LightsCubit extends Cubit<LightsState> {
     updateLED('5000', i_mid);
     updateLED('6500', i_high);
 
+    writeBluetooth();
+
     print("LEDs set to: ${state.module.LEDs}");
   }
 
@@ -151,7 +153,10 @@ class LightsCubit extends Cubit<LightsState> {
   }
 
   void deselectAll() {
-    emit(state.copyWith(selectedSections: []));
+    emit(state.copyWith(
+      selectedSections: [],
+      selectedAddresses: sectionsToAddresses([])));
+    print("Selected Addresses: ${state.selectedAddresses}");
   }
   List<int> sectionsToAddresses(List<int> sections) {
     List<int> selectedAddresses = [];
