@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:illuden/widgets/bluetooth/cubit/bluetooth_cubit.dart';
 import 'lights_state.dart';
@@ -6,6 +7,9 @@ import '../../assets/constants.dart';
 
 class LightsCubit extends Cubit<LightsState> {
   final BluetoothCubit _bluetooth;
+  Timer? _throttleTimer;
+  static const _throttleDuration = Duration(milliseconds: 200);
+  bool _isThrottled = false;
   LightsCubit(Module module, this._bluetooth)
       : super(LightsState(module: module));
 
@@ -175,38 +179,43 @@ class LightsCubit extends Cubit<LightsState> {
 
   // Takes the current module state and write to bluetooth
   void writeBluetooth() {
-    List<int> selectedAddresses = state.selectedAddresses;
-    Map<String, dynamic> ledValues = state.module.LEDs;
-    print("LED Values: $ledValues");
-
-    // call BluetoothCubit write function to perform identical write
-    if (state.module.isON) {
-      bool isRGB = state.module.isRGBmode;
-      print("RGB: $isRGB");
-      _bluetooth.write(
-        3,
-        selectedAddresses,
-        isRGB ? 0 : ledValues['2700'],
-        isRGB ? 0 : ledValues['5000'],
-        isRGB ? 0 : ledValues['6500'],
-        isRGB ? ledValues['RGB'][0] : 0,
-        isRGB ? ledValues['RGB'][1] : 0,
-        isRGB ? ledValues['RGB'][2] : 0,
-      );
-    } else {
-      // If module is off, turn off all LEDs
-      _bluetooth.write(
-        3,
-        Constants.allAddresses,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      );
+    if (_isThrottled) {
+      return;
     }
+    _isThrottled = true;
+    _throttleTimer = Timer(_throttleDuration, () {
+      _isThrottled = false;
+      List<int> selectedAddresses = state.selectedAddresses;
+      Map<String, dynamic> ledValues = state.module.LEDs;
+      print("LED Values: $ledValues");
 
-    
+      // call BluetoothCubit write function to perform identical write
+      if (state.module.isON) {
+        bool isRGB = state.module.isRGBmode;
+        print("RGB: $isRGB");
+        _bluetooth.write(
+          3,
+          selectedAddresses,
+          isRGB ? 0 : ledValues['2700'],
+          isRGB ? 0 : ledValues['5000'],
+          isRGB ? 0 : ledValues['6500'],
+          isRGB ? ledValues['RGB'][0] : 0,
+          isRGB ? ledValues['RGB'][1] : 0,
+          isRGB ? ledValues['RGB'][2] : 0,
+        );
+      } else {
+        // If module is off, turn off all LEDs
+        _bluetooth.write(
+          3,
+          Constants.allAddresses,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        );
+      }
+    });
   }
 }
