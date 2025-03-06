@@ -8,7 +8,7 @@ import '../../assets/constants.dart';
 class LightsCubit extends Cubit<LightsState> {
   final BluetoothCubit _bluetooth;
   Timer? _throttleTimer;
-  static const _throttleDuration = Duration(milliseconds: 200);
+  static final _throttleDuration = Duration(milliseconds: Constants.throttleTimerDuration);
   bool _isThrottled = false;
   LightsCubit(Module module, this._bluetooth)
       : super(LightsState(module: module));
