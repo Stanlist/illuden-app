@@ -29,7 +29,7 @@ class NavigationButton extends StatelessWidget {
       );
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primary,  
+        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.9),  
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         textStyle: TextStyle(fontSize: 14.0),
         alignment: Alignment.center,

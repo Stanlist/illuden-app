@@ -51,3 +51,55 @@ class BulkSelectToggle extends StatelessWidget {
     );
   }
 }
+
+class SelectDeselectButtons extends StatelessWidget {
+  const SelectDeselectButtons({Key? key}) : super(key: key);
+  // Utility function to create the button style
+  ButtonStyle _buttonStyle(BuildContext context, bool isEnabled) {
+    return TextButton.styleFrom(
+      foregroundColor: isEnabled
+          ? Theme.of(context).colorScheme.onPrimary
+          : Theme.of(context).colorScheme.surface,
+      splashFactory: NoSplash.splashFactory,
+      backgroundColor: isEnabled
+          ? Theme.of(context).colorScheme.primary.withOpacity(0.9)
+          : Theme.of(context).colorScheme.surfaceDim,
+       minimumSize: const Size(105.0, 36.0),
+      textStyle: TextStyle(fontSize: 14),
+      );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LightsCubit, LightsState>(
+      builder: (context, state) {
+        bool isSelectAllAvailable = state.selectedSections.length < Constants.allSections.length;
+        bool isDeselectAllAvailable = state.selectedSections.isNotEmpty;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Select All Button
+            TextButton(
+              onPressed: isSelectAllAvailable
+                  ? () => context.read<LightsCubit>().selectAll()
+                  : null,
+              style: _buttonStyle(context, isSelectAllAvailable),
+              child: const Text('Select All'),
+            ),
+
+            const SizedBox(width: 12),  // Adds space between the buttons
+            // Deselect All Button
+            TextButton(
+              onPressed: isDeselectAllAvailable
+                  ? () => context.read<LightsCubit>().deselectAll()
+                  : null,
+              style: _buttonStyle(context, isDeselectAllAvailable),
+              child: const Text('Deselect All'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

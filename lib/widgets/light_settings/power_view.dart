@@ -14,7 +14,7 @@ class Page1PowerView extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
-          child: BulkSelectToggle(),
+          child: SelectDeselectButtons(),
         ),
         Expanded(child: Container()), 
         const PowerSwitch(),

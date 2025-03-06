@@ -19,9 +19,11 @@ class Constants {
   };
   static int totalModules = 45;
   static int totalSections = 17;
-  static List<int> allSections = List.generate(17, (index) => index);
+  static List<int> allSections = List.generate(17, (i) => i);
   static List<int> allAddresses = List<int>.generate(45, (i) => i + 16);
-  static double selectorWidth = 300;
-  static double selectorHeight = 350;
+  static double selectorWidth = 250;
+  static double selectorHeight = 300;
+  static double selectorHorizontalPadding = 90;
+  static double selectorVerticalPadding = 30;
 }
 

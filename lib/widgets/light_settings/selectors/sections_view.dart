@@ -11,11 +11,12 @@ class SectionsView extends StatelessWidget {
     return BlocBuilder<LightsCubit, LightsState>(
       builder: (context, state) {
         List<int> selectedSections = state.selectedSections;
-        double width = Constants.selectorWidth;
-        double height = Constants.selectorHeight;
+        // double width = Constants.selectorWidth;
+        // double height = Constants.selectorHeight;
+        double width =  MediaQuery.of(context).size.width - Constants.selectorHorizontalPadding;
+        double height = width + Constants.selectorVerticalPadding;
         double centerX = width / 2;
         double centerY = height / 2;
-
         return Center(
           child: SizedBox(
             width: width,

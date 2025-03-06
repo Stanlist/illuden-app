@@ -14,8 +14,10 @@ class TemperatureView extends StatelessWidget {
         final bool isON = state.module.isON; // Get power state
         return Center(
           child: SizedBox(
-            width: Constants.selectorWidth,
-            height: Constants.selectorHeight,
+            // width: Constants.selectorWidth,
+            // height: Constants.selectorHeight,
+            width: MediaQuery.of(context).size.width - Constants.selectorHorizontalPadding,
+            height: MediaQuery.of(context).size.width - Constants.selectorHorizontalPadding + Constants.selectorVerticalPadding,
             child: TemperatureGage(
               temperature: temperature,
               onTemperatureChanged: (value) {
