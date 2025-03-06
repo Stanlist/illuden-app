@@ -58,18 +58,11 @@ class LightsCubit extends Cubit<LightsState> {
       }
     }
     
-    emit(state.copyWith(
-      module: state.module.copyWith(
-        LEDs: {
-          '2700': i_low,
-          '5000': i_mid,
-          '6500': i_high,
-          'RGB': state.module.LEDs['RGB'],
-        },
-      ),
-    ));
+    updateLED('2700', i_low);
+    updateLED('5000', i_mid);
+    updateLED('6500', i_high);
 
-    print("LED Intensities: ${i_low}, ${i_mid}, ${i_high}");
+    print("LEDs set to: ${state.module.LEDs}");
   }
 
   void setBrightness(int brightness) {
@@ -91,6 +84,7 @@ class LightsCubit extends Cubit<LightsState> {
   void updateLED(String key, dynamic value) {
     final newLEDs = Map<String, dynamic>.from(state.module.LEDs);
     newLEDs[key] = value;
+    state.module.LEDs = newLEDs;
     emit(state.copyWith(
       module: state.module.copyWith(LEDs: newLEDs),
     ));
@@ -178,10 +172,12 @@ class LightsCubit extends Cubit<LightsState> {
   void writeBluetooth() {
     List<int> selectedAddresses = state.selectedAddresses;
     Map<String, dynamic> ledValues = state.module.LEDs;
+    print("LED Values: $ledValues");
 
     // call BluetoothCubit write function to perform identical write
     if (state.module.isON) {
       bool isRGB = state.module.isRGBmode;
+      print("RGB: $isRGB");
       _bluetooth.write(
         3,
         selectedAddresses,
@@ -205,5 +201,7 @@ class LightsCubit extends Cubit<LightsState> {
         0,
       );
     }
+
+    
   }
 }

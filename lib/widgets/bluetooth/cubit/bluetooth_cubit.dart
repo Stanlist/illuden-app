@@ -151,6 +151,10 @@ class BluetoothCubit extends Cubit<BluetoothState> {
     }
   }
 
+  bool isConnected() {
+    return state.isConnected;
+  }
+
   // Write to the device with one of the following types:
   // 1: Single write
   // 2: Multiple write (not implemented)
