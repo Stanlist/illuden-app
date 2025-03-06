@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../utils/lights/lights.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../../../assets/constants.dart';
+import 'package:illuden/assets/constants.dart';
 class TemperatureView extends StatelessWidget {
   const TemperatureView({super.key});
 
