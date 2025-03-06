@@ -24,7 +24,7 @@ class Page1 extends StatelessWidget {
         SectionsView(),
         SizedBox(height: 5),
         BrightnessView(),
-        PowerView(),
+        Page1PowerView(),
         BluetoothWritePage(),
       ],
       ),

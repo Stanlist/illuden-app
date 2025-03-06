@@ -22,7 +22,7 @@ class Page2 extends StatelessWidget {
         TemperatureView(),
         SizedBox(height: 5),
         BrightnessView(),
-        PowerView(),
+        Page2PowerView(),
       ],
       ),
     );

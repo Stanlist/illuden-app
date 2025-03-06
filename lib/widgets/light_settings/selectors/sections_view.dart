@@ -11,17 +11,22 @@ class SectionsView extends StatelessWidget {
     return BlocBuilder<LightsCubit, LightsState>(
       builder: (context, state) {
         List<int> selectedSections = state.selectedSections;
+        double width = Constants.selectorWidth;
+        double height = Constants.selectorHeight;
+        double centerX = width / 2;
+        double centerY = height / 2;
+
         return Center(
           child: SizedBox(
-            width: Constants.selectorWidth,
-            height: Constants.selectorHeight,
+            width: width,
+            height: height,
             child: GestureDetector(
               onTapDown: (details) {
-                _onTap(context, details.localPosition);
+                _onTap(context, details.localPosition, centerX, centerY);
               },
               child: CustomPaint(
-                size: Size(Constants.selectorWidth, Constants.selectorWidth),
-                painter: RadialLayerPainter(selectedSections: selectedSections),
+                size: Size(width, height),
+                painter: RadialLayerPainter(selectedSections: selectedSections, width: width, height: height),
               ),
             ),
           ),
@@ -30,29 +35,26 @@ class SectionsView extends StatelessWidget {
     );
   }
 
-  void _onTap(BuildContext context, Offset position) {
-    double centerX = 150;
-    double centerY = 150;
+  void _onTap(BuildContext context, Offset position, double centerX, double centerY) {
     double dx = position.dx - centerX;
     double dy = position.dy - centerY;
     double angle = atan2(dy, dx);
     double distance = sqrt(dx * dx + dy * dy);
 
-    int layerIndex = _getLayerIndex(distance);
+    int layerIndex = _getLayerIndex(distance, centerX);
     int sectionIndex = _getSectionIndex(angle);
-    // print("Tapped at: ${position.dx}, ${position.dy}");
 
     if (layerIndex != -1 && sectionIndex != -1) {
       int section = layerIndex * 5 + sectionIndex;
-      print("Tapped on section: $section (Layer $layerIndex, Section $sectionIndex)");
       context.read<LightsCubit>().updateSelectedModules(section);
     }
   }
 
-  int _getLayerIndex(double distance) {
-    if (distance < 50) return 0;
-    if (distance < 100) return 1;
-    if (distance < 150) return 2;
+  int _getLayerIndex(double distance, double maxRadius) {
+    double step = maxRadius / 3;
+    if (distance < step) return 0;
+    if (distance < 2 * step) return 1;
+    if (distance < 3 * step) return 2;
     return -1;
   }
 
@@ -65,14 +67,16 @@ class SectionsView extends StatelessWidget {
 
 class RadialLayerPainter extends CustomPainter {
   final List<int> selectedSections;
+  final double width;
+  final double height;
 
-  RadialLayerPainter({required this.selectedSections});
+  RadialLayerPainter({required this.selectedSections, required this.width, required this.height});
 
   @override
   void paint(Canvas canvas, Size size) {
-    double centerX = size.width / 2;
-    double centerY = size.height / 2;
-    List<double> layerRadii = [50.0, 100.0, 150.0];
+    double centerX = width / 2;
+    double centerY = height / 2;
+    List<double> layerRadii = [width / 6, width / 3, width / 2];
     double sectionAngle = 2 * pi / 5;
 
     for (int layerIndex = 0; layerIndex < 3; layerIndex++) {
