@@ -13,7 +13,63 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(isON: !state.module.isON),
     ));
+    setWhiteLEDValues();
     print("isON: ${state.module.isON}");
+  }
+
+  // Maps desired brightness and temperature to LED intensities
+  void setWhiteLEDValues() {
+
+    // Half actual intensity for safety
+    int brightness = (state.module.brightness / 2).toInt();
+    int temperature = state.module.temperature;
+    int i_low = 0;
+    int i_mid = 0;
+    int i_high = 0;
+    int t_low = 0;
+    int t_high = 0;
+
+    if (state.module.isON) {
+      
+      // Determine the two closest temperature LEDs
+      if (temperature <= 5000) {
+        t_low = 2700;
+        t_high = 5000;
+      } else {
+        t_low = 5000;
+        t_high = 6500;
+      }
+
+      // Calculate brightness for each LED.
+      if (temperature == 5000) {
+        i_mid = brightness;
+      } else if (temperature == 6500) {
+        i_high = brightness;
+      } else {
+        double ratio = (temperature - t_low) / (t_high - temperature);
+
+        if (temperature < 5000) {
+          i_low = (brightness / (1 + ratio)).toInt();
+          i_mid = ((brightness * ratio) / (1 + ratio)).toInt();
+        } else {
+          i_mid = (brightness / (1 + ratio)).toInt(); 
+          i_high = ((brightness * ratio) / (1 + ratio)).toInt();
+        }
+      }
+    }
+    
+    emit(state.copyWith(
+      module: state.module.copyWith(
+        LEDs: {
+          '2700': i_low,
+          '5000': i_mid,
+          '6500': i_high,
+          'RGB': state.module.LEDs['RGB'],
+        },
+      ),
+    ));
+
+    print("LED Intensities: ${i_low}, ${i_mid}, ${i_high}");
   }
 
   void setBrightness(int brightness) {
@@ -21,7 +77,8 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(brightness: brightness),
     ));
-    // print("brightness: ${state.module.brightness}");
+    setWhiteLEDValues();
+    print("brightness: ${state.module.brightness}");
   }
 
   void switchMode(bool isRGB) {
@@ -43,7 +100,8 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(temperature: temp),
     ));
-    // print("temp: ${state.module.temperature}");
+    setWhiteLEDValues();
+    print("temp: ${state.module.temperature}");
   }
 
   void updateConnectionStatus(bool isConnected) {
