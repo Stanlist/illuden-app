@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:illuden/widgets/light_settings/buttons/power_switch.dart';
 
 import 'package:illuden/widgets/light_settings/buttons/bulk_select.dart';
+import 'package:illuden/widgets/light_settings/buttons/mode_toggle.dart';
 
 
-class Page1PowerView extends StatelessWidget {
-  const Page1PowerView({super.key});
+class PowerView extends StatelessWidget {
+  final Widget leftWidget;
+  const PowerView({Key? key, required this.leftWidget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,27 +16,49 @@ class Page1PowerView extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
-          child: BulkSelectToggle(),
+          child: leftWidget,
         ),
-        Expanded(child: Container()), 
+        const Expanded(child: SizedBox()),
         const PowerSwitch(),
       ],
     );
+  }
+}
+
+class Page1PowerView extends StatelessWidget {
+  const Page1PowerView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const PowerView(leftWidget: SelectDeselectButtons());
   }
 }
 
 class Page2PowerView extends StatelessWidget {
-  const Page2PowerView({super.key});
+  const Page2PowerView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children:  [
-
-        Expanded(child: Container()), 
-        const PowerSwitch(),
-      ],
-    );
+    return const PowerView(leftWidget: ModeToggle());
   }
 }
+
+
+// class Page2PowerView extends StatelessWidget {
+//   const Page2PowerView({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children:  [
+//         Padding(
+//           padding: const EdgeInsets.only(left: 8.0),
+//           child: ModeToggle(),
+//         ),
+//         Expanded(child: Container()), 
+//         const PowerSwitch(),
+//       ],
+//     );
+//   }
+// }

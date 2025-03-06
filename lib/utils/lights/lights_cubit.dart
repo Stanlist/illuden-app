@@ -21,13 +21,14 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(brightness: brightness),
     ));
-    print("brightness: ${state.module.brightness}");
+    // print("brightness: ${state.module.brightness}");
   }
 
   void switchMode(bool isRGB) {
     emit(state.copyWith(
       module: state.module.copyWith(isRGBmode: isRGB),
     ));
+    print("isRGBmode: ${state.module.isRGBmode}");
   }
 
   void updateLED(String key, dynamic value) {
@@ -42,7 +43,7 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(temperature: temp),
     ));
-    print("temp: ${state.module.temperature}");
+    // print("temp: ${state.module.temperature}");
   }
 
   void updateConnectionStatus(bool isConnected) {
@@ -81,11 +82,11 @@ class LightsCubit extends Cubit<LightsState> {
       }
     }
     List<int> updatedAddresses = sectionsToAddresses(updatedSelections);
-    print("Emitting:\n "
-        "sections = $updatedSelections\n"
-        "addresses = $updatedAddresses \n"
-        "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
-        );
+    // print("Emitting:\n "
+    //     "sections = $updatedSelections\n"
+    //     "addresses = $updatedAddresses \n"
+    //     "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
+    //     );
 
     emit(state.copyWith(
         selectedSections: updatedSelections,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../utils/lights/lights.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../../../assets/constants.dart';
+import 'package:illuden/assets/constants.dart';
 class TemperatureView extends StatelessWidget {
   const TemperatureView({super.key});
 
@@ -14,8 +14,10 @@ class TemperatureView extends StatelessWidget {
         final bool isON = state.module.isON; // Get power state
         return Center(
           child: SizedBox(
-            width: Constants.selectorWidth,
-            height: Constants.selectorHeight,
+            // width: Constants.selectorWidth,
+            // height: Constants.selectorHeight,
+            width: MediaQuery.of(context).size.width - Constants.selectorHorizontalPadding,
+            height: MediaQuery.of(context).size.width - Constants.selectorHorizontalPadding + Constants.selectorVerticalPadding,
             child: TemperatureGage(
               temperature: temperature,
               onTemperatureChanged: (value) {
