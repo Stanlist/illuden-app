@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:illuden/utils/lights/lights_cubit.dart';
+import 'package:illuden/utils/lights/lights_state.dart';
 import 'package:illuden/widgets/bluetooth/cubit/bluetooth_cubit.dart';
 
 class BluetoothWritePage extends StatelessWidget {
@@ -22,16 +24,16 @@ class BluetoothSingleWrite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BluetoothCubit, BluetoothState>(
+    return BlocBuilder<LightsCubit, LightsState>(
       builder: (context, state) {
         return ElevatedButton(
-          onPressed: state.isConnected 
+          onPressed: context.read<BluetoothCubit>().isConnected()
             ? () async {
                 try {
                   // Get the bluetooth cubit to write to the device
-                  final cubit = context.read<BluetoothCubit>();
+                  final cubit = context.read<LightsCubit>();
                   print("Writing to bluetooth");
-                  cubit.write(3,[16,17,18,19,20],20,20,20,0,0,0); // Example data
+                  cubit.writeBluetooth();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Data written successfully')),
                   );
