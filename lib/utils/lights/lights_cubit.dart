@@ -21,7 +21,7 @@ class LightsCubit extends Cubit<LightsState> {
   void setWhiteLEDValues() {
 
     // Half actual intensity for safety
-    int brightness = (state.module.brightness / 2).toInt();
+    int brightness = state.module.brightness;
     int temperature = state.module.temperature;
     int i_low = 0;
     int i_mid = 0;
