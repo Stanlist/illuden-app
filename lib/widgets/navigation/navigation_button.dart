@@ -17,15 +17,17 @@ class NavigationButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) {
-              return destination; // go to destination
-            },
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              // Return the child directly without any animation
-              return child;
-            },
-          ),
+          MaterialPageRoute(builder: (context) => destination)
+          // removing animation
+          // PageRouteBuilder(
+          //   pageBuilder: (context, animation, secondaryAnimation) {
+          //     return destination; // go to destination
+          //   },
+          // transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          //   // Return the child directly without any animation
+          //   return child;
+          // },
+          // ),
       );
       },
       style: ElevatedButton.styleFrom(
