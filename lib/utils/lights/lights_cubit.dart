@@ -134,11 +134,11 @@ class LightsCubit extends Cubit<LightsState> {
       }
     }
     List<int> updatedAddresses = sectionsToAddresses(updatedSelections);
-    // print("Emitting:\n "
-    //     "sections = $updatedSelections\n"
-    //     "addresses = $updatedAddresses \n"
-    //     "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
-    //     );
+    print("Emitting:\n "
+        "sections = $updatedSelections\n"
+        "addresses = $updatedAddresses \n"
+        "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
+        );
 
     emit(state.copyWith(
         selectedSections: updatedSelections,

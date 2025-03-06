@@ -13,9 +13,6 @@ class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Page 1'),
-      // ),
       body: BodyView(
       children: [
         BluetoothView(),
@@ -25,7 +22,7 @@ class Page1 extends StatelessWidget {
         SizedBox(height: 5),
         BrightnessView(),
         Page1PowerView(),
-        // BluetoothWritePage(),
+        BluetoothWritePage(),
       ],
       ),
     );
