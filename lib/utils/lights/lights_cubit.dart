@@ -114,6 +114,7 @@ class LightsCubit extends Cubit<LightsState> {
     updatedLEDs['RGB'] = [red, green, blue];
 
     emit(state.copyWith(module: state.module.copyWith(LEDs: updatedLEDs)));
+    setWhiteLEDValues();
     print("RGB: ${state.module.LEDs['RGB']}");
   }
   
