@@ -132,6 +132,35 @@ class LightsCubit extends Cubit<LightsState> {
   bool noSelectedModules(){
     return state.selectedSections.isEmpty;
   }
+  bool isIndirectSelected() {
+    return state.selectedSections.contains(15);
+  }
+  void toggleIndirect() {
+    // Create a new list from the current selected sections.
+    List<int> updatedSelections = List.from(state.selectedSections);
+
+    // Check if indirect (15) is already selected.
+    if (updatedSelections.contains(15)) {
+      // Remove indirect if it's already selected.
+      updatedSelections.remove(15);
+    } else {
+      // Otherwise, add indirect.
+      updatedSelections.add(15);
+    }
+
+    // Update addresses based on the new selection.
+    List<int> updatedAddresses = sectionsToAddresses(updatedSelections);
+
+    // Emit the updated state.
+    emit(state.copyWith(
+      selectedSections: updatedSelections,
+      selectedAddresses: updatedAddresses,
+    ));
+    print("Emitting:\n "
+        "sections = $updatedSelections\n"
+        "addresses = $updatedAddresses \n"
+    );
+  }
   void updateSelectedModules(int section) {
     final Set<int> centerSection = {0, 1, 2, 3, 4};
     List<int> updatedSelections = List.from(state.selectedSections);
@@ -160,7 +189,7 @@ class LightsCubit extends Cubit<LightsState> {
         "sections = $updatedSelections\n"
         "addresses = $updatedAddresses \n"
         "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
-        );
+    );
 
     emit(state.copyWith(
         selectedSections: updatedSelections,
@@ -170,6 +199,10 @@ class LightsCubit extends Cubit<LightsState> {
       emit(state.copyWith(
         selectedSections: List<int>.from(Constants.allSections),
         selectedAddresses: sectionsToAddresses(Constants.allSections)));
+            print("Emitting:\n "
+        "sections = ${state.selectedSections}\n"
+        "addresses = ${state.selectedAddresses} \n"
+    );
   }
 
   void deselectAll() {
