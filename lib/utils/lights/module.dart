@@ -38,6 +38,6 @@ class Module extends Equatable {
     );
   }
   @override
-  List<Object?> get props => [isRGBmode, isON, brightness, temperature];
+  List<Object?> get props => [isRGBmode, isON, brightness, temperature, LEDs];
 }
 

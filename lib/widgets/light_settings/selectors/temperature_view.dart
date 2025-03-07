@@ -49,9 +49,9 @@ class TemperatureLabel extends StatelessWidget {
     return Text(
         '${temperature.round()} K',
         style: TextStyle(
-        fontSize: 40,
-        fontWeight: FontWeight.w500,
-        color: Theme.of(context).colorScheme.secondary,
+        fontSize: 32,
+        // fontWeight: FontWeight.w500,
+        // color: Theme.of(context).colorScheme.secondary,
     ),
     );
   }

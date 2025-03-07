@@ -4,6 +4,8 @@ import 'package:illuden/widgets/bluetooth/cubit/bluetooth_cubit.dart';
 import 'lights_state.dart';
 import 'module.dart';
 import '../../assets/constants.dart';
+import 'package:flutter/material.dart';
+
 
 class LightsCubit extends Cubit<LightsState> {
   final BluetoothCubit _bluetooth;
@@ -65,7 +67,6 @@ class LightsCubit extends Cubit<LightsState> {
     updateLED('2700', i_low);
     updateLED('5000', i_mid);
     updateLED('6500', i_high);
-
     writeBluetooth();
 
     print("LEDs set to: ${state.module.LEDs}");
@@ -103,7 +104,19 @@ class LightsCubit extends Cubit<LightsState> {
     setWhiteLEDValues();
     print("temp: ${state.module.temperature}");
   }
+  void updateRgb(Color color) {
+    // Extracting RGB values from the Color object
+    final int red = color.red;
+    final int green = color.green;
+    final int blue = color.blue;
 
+    final updatedLEDs = Map<String, dynamic>.from(state.module.LEDs);
+    updatedLEDs['RGB'] = [red, green, blue];
+
+    emit(state.copyWith(module: state.module.copyWith(LEDs: updatedLEDs)));
+    print("RGB: ${state.module.LEDs['RGB']}");
+  }
+  
   void updateConnectionStatus(bool isConnected) {
     emit(state.copyWith(
       module: state.module.copyWith(isConnected: isConnected),
