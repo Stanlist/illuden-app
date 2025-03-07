@@ -79,7 +79,7 @@ class BrightnessSlider extends StatelessWidget {
             showTicks: false,
             showLabels: false,
             trackShape: ModRightPadding(),
-            onChanged: isON && !isRGBmode
+            onChanged: isON && !isRGBmode && !context.read<LightsCubit>().noSelectedModules()
                 ? (value) => context.read<LightsCubit>().setBrightness(value.toInt())
                 : null, // Prevent changes if disabled
           ),

@@ -128,7 +128,9 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(selectedSections: newSelection));
     // print("selected Sections: ${state.selectedSections}");
   }
-
+  bool noSelectedModules(){
+    return state.selectedSections.isEmpty;
+  }
   void updateSelectedModules(int section) {
     final Set<int> centerSection = {0, 1, 2, 3, 4};
     List<int> updatedSelections = List.from(state.selectedSections);
