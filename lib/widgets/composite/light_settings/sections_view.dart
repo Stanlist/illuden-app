@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../assets/constants.dart';
-import '../../../utils/lights/lights.dart';
-
+import 'package:illuden/utils/lights/lights.dart';
 
 class SectionsView extends StatelessWidget {
   @override

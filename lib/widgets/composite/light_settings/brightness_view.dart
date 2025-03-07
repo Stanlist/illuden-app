@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-import '../../utils/lights/lights.dart';
+import 'package:illuden/utils/lights/lights.dart';
 class BrightnessView extends StatelessWidget {
   const BrightnessView({super.key});
 

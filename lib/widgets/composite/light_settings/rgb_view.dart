@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:illuden/utils/lights/lights.dart';
 import 'package:illuden/assets/constants.dart';
-import 'package:illuden/widgets/light_settings/selectors/circle_color_picker.dart';
+import 'package:illuden/widgets/atomic/light_settings/circle_color_picker.dart';
 class RGBView extends StatelessWidget {
   RGBView({super.key});
 

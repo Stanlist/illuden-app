@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../pages/page2.dart';
+import 'package:illuden/pages/page2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:illuden/utils/lights/lights.dart';
-import 'package:illuden/widgets/navigation/navigation_button.dart';
+import 'package:illuden/widgets/atomic/navigation_button.dart';
 
 class Page1NavigationView extends StatelessWidget {
   const Page1NavigationView({super.key});

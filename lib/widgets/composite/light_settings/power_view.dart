@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:illuden/widgets/light_settings/buttons/power_switch.dart';
-
-import 'package:illuden/widgets/light_settings/buttons/bulk_select.dart';
-import 'package:illuden/widgets/light_settings/buttons/mode_toggle.dart';
+import 'package:illuden/widgets/atomic/light_settings/power_switch.dart';
+import 'package:illuden/widgets/atomic/light_settings/bulk_select.dart';
+import 'package:illuden/widgets/atomic/light_settings/mode_toggle.dart';
 
 
 class PowerView extends StatelessWidget {
