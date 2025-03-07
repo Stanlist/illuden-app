@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 typedef ColorCodeBuilder = Widget Function(BuildContext context, Color color);

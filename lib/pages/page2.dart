@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:illuden/widgets/bluetooth/bluetooth_bar_view.dart';
-import 'package:illuden/widgets/bluetooth/cubit/bluetooth_single_write.dart';
-import 'package:illuden/widgets/light_settings/selectors/temperature_view.dart';
-import 'package:illuden/widgets/light_settings/selectors/rgb_view.dart';
-import 'package:illuden/widgets/light_settings/power_view.dart';
-import 'package:illuden/widgets/light_settings/brightness_view.dart';
-import 'package:illuden/widgets/navigation/page_2_navigation_view.dart';
-import 'package:illuden/widgets/body_view.dart';
+// import 'package:illuden/widgets/bluetooth/cubit/bluetooth_single_write.dart';
+import 'package:illuden/widgets/composite/light_settings/temperature_view.dart';
+import 'package:illuden/widgets/composite/light_settings/rgb_view.dart';
+import 'package:illuden/widgets/composite/light_settings/power_view.dart';
+import 'package:illuden/widgets/composite/light_settings/brightness_view.dart';
+import 'package:illuden/widgets/composite/navigation/page_2_navigation_view.dart';
+import 'package:illuden/widgets/containers/body_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:illuden/utils/lights/lights.dart';
 
@@ -29,8 +29,9 @@ class Page2 extends StatelessWidget {
               isRGBmode ? RGBView() : TemperatureView(),
               const SizedBox(height: 5),
               BrightnessView(),
+              const SizedBox(height: 10),
               Page2PowerView(),
-              BluetoothWritePage(),
+              // BluetoothWritePage(),
             ],
           );
         },
