@@ -11,6 +11,7 @@ class BrightnessView extends StatelessWidget {
       builder: (context, state) {
         final int brightness = state.module.brightness;
         final bool isON = state.module.isON; // Get power state
+        final bool isRGBmode = state.module.isRGBmode;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
@@ -21,7 +22,7 @@ class BrightnessView extends StatelessWidget {
               const SizedBox(height: 8),
 
               /// Centered Brightness Slider with Icon
-              BrightnessSlider(brightness: brightness, isON: isON),
+              BrightnessSlider(brightness: brightness, isON: isON, isRGBmode: isRGBmode,),
             ],
           ),
         );
@@ -61,8 +62,8 @@ class BrightnessLabel extends StatelessWidget {
 class BrightnessSlider extends StatelessWidget {
   final int brightness;
   final bool isON;
-
-  const BrightnessSlider({super.key, required this.brightness, required this.isON});
+  final bool isRGBmode;
+  const BrightnessSlider({super.key, required this.brightness, required this.isON, required this.isRGBmode});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +79,7 @@ class BrightnessSlider extends StatelessWidget {
             showTicks: false,
             showLabels: false,
             trackShape: ModRightPadding(),
-            onChanged: isON
+            onChanged: isON && !isRGBmode
                 ? (value) => context.read<LightsCubit>().setBrightness(value.toInt())
                 : null, // Prevent changes if disabled
           ),
