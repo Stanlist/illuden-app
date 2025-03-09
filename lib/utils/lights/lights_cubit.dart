@@ -211,6 +211,11 @@ class LightsCubit extends Cubit<LightsState> {
     // for presets (low)
   }
 
+  void applyPreset(LightsState presetState) {
+    emit(presetState);
+    writePresetBluetooth();
+  }
+
   // Takes the current module state and write to bluetooth
   void debounce(VoidCallback callback) {
     _debounceTimer?.cancel();
