@@ -226,7 +226,50 @@ class LightsCubit extends Cubit<LightsState> {
     // for presets (low)
   }
 
+  void applyPreset(LightsState presetState) {
+    emit(presetState);
+    writePresetBluetooth();
+  }
+
   // Takes the current module state and write to bluetooth
+
+  void writePresetBluetooth() {
+    if (_isThrottled) {
+      return;
+    }
+    _isThrottled = true;
+    _throttleTimer = Timer(_throttleDuration, () {
+      _isThrottled = false;
+      List<int> selectedAddresses = state.selectedAddresses;
+      Map<String, dynamic> ledValues = state.module.LEDs;
+      print("LED Values: $ledValues");
+      if (state.module.isON) {
+        _bluetooth.write(
+        3,
+        selectedAddresses,
+        ledValues['2700'],
+        ledValues['5000'],
+        ledValues['6500'],
+        ledValues['RGB'][0],
+        ledValues['RGB'][1],
+        ledValues['RGB'][2],
+        );
+      } else {
+        // If module is off, turn off all LEDs
+        _bluetooth.write(
+          3,
+          Constants.allAddresses,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        );
+      }
+    });
+  }
+
   void writeBluetooth() {
     if (_isThrottled) {
       return;
