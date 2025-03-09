@@ -45,7 +45,7 @@ class PresetsView extends StatelessWidget {
             ElevatedButton(
               onPressed: () {context.read<LightsCubit>().applyPreset(resetLightPreset);},
               style: buttonStyle,
-              child: const Text('💣', style: TextStyle(fontSize: 24)),
+              child: const Text('🔄️', style: TextStyle(fontSize: 24)),
             ),
           ],
         ),
