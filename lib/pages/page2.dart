@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:illuden/widgets/bluetooth/bluetooth_bar_view.dart';
-// import 'package:illuden/widgets/bluetooth/cubit/bluetooth_single_write.dart';
 import 'package:illuden/widgets/composite/light_settings/temperature_view.dart';
 import 'package:illuden/widgets/composite/light_settings/rgb_view.dart';
 import 'package:illuden/widgets/composite/light_settings/power_view.dart';
@@ -31,7 +30,6 @@ class Page2 extends StatelessWidget {
               BrightnessView(),
               const SizedBox(height: 10),
               Page2PowerView(),
-              // BluetoothWritePage(),
             ],
           );
         },
