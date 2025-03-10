@@ -174,7 +174,7 @@ class BluetoothCubit extends Cubit<BluetoothState> {
         List<int> msg = [type, w2700, w5000, w6500, g, r, b];
         msg.addAll(addresses);
         await _writeCharacteristic!.write(msg);
-        print("Identical Write Completed");
+        print("Identical Write $msg Completed");
       } else if (type == 1) {
 
         // Single write
