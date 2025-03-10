@@ -166,20 +166,27 @@ class BluetoothCubit extends Cubit<BluetoothState> {
       int r = 0,
       int g = 0,
       int b = 0]) async {
-    print("Trying to write to device...");
     if (state.isConnected && _writeCharacteristic != null) {
       if (type == 3) {
 
         // Identical write
         List<int> msg = [type, w2700, w5000, w6500, g, r, b];
         msg.addAll(addresses);
-        await _writeCharacteristic!.write(msg);
-        print("Identical Write $msg Completed");
+        print("Trying Identical Write: $msg");
+        try {
+          await _writeCharacteristic!.write(msg);  
+        } catch (e) {
+          print("Identical Write Error: $e");
+        }
       } else if (type == 1) {
 
         // Single write
-        await _writeCharacteristic!.write([type, addresses[0], w2700, w5000, w6500, g, r, b]);
-        print("Single Write Completed");
+        print("Trying Single Write");
+        try {
+          await _writeCharacteristic!.write([type, addresses[0], w2700, w5000, w6500, g, r, b]);
+        } catch (e) {
+          print("Single Write Error: $e");
+        }
       } else {
         print("Invalid write type.");
       }
