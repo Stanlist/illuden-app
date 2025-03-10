@@ -32,43 +32,43 @@ class LightsCubit extends Cubit<LightsState> {
   void setWhiteLEDValues() {
     int brightness = state.module.brightness;
     int temperature = state.module.temperature;
-    int i_low = 0;
-    int i_mid = 0;
-    int i_high = 0;
-    int t_low = 0;
-    int t_high = 0;
+    int iLow = 0;
+    int iMid = 0;
+    int iHigh = 0;
+    int tLow = 0;
+    int tHigh = 0;
 
     if (state.module.isON) {
       // Determine the two closest temperature LEDs
       if (temperature <= 5000) {
-        t_low = 2700;
-        t_high = 5000;
+        tLow = 2700;
+        tHigh = 5000;
       } else {
-        t_low = 5000;
-        t_high = 6500;
+        tLow = 5000;
+        tHigh = 6500;
       }
 
       // Calculate brightness for each LED.
       if (temperature == 5000) {
-        i_mid = brightness;
+        iMid = brightness;
       } else if (temperature == 6500) {
-        i_high = brightness;
+        iHigh = brightness;
       } else {
-        double ratio = (temperature - t_low) / (t_high - temperature);
+        double ratio = (temperature - tLow) / (tHigh - temperature);
 
         if (temperature < 5000) {
-          i_low = (brightness / (1 + ratio)).toInt();
-          i_mid = ((brightness * ratio) / (1 + ratio)).toInt();
+          iLow = (brightness / (1 + ratio)).toInt();
+          iMid = ((brightness * ratio) / (1 + ratio)).toInt();
         } else {
-          i_mid = (brightness / (1 + ratio)).toInt();
-          i_high = ((brightness * ratio) / (1 + ratio)).toInt();
+          iMid = (brightness / (1 + ratio)).toInt(); 
+          iHigh = ((brightness * ratio) / (1 + ratio)).toInt();
         }
       }
     }
-
-    updateLED('2700', i_low);
-    updateLED('5000', i_mid);
-    updateLED('6500', i_high);
+    
+    updateLED('2700', iLow);
+    updateLED('5000', iMid);
+    updateLED('6500', iHigh);
     writeBluetooth();
   }
 
@@ -211,6 +211,7 @@ class LightsCubit extends Cubit<LightsState> {
     // for presets (low)
   }
 
+
   // Takes the current module state and write to bluetooth
   void debounce(VoidCallback callback) {
     _debounceTimer?.cancel();
@@ -224,8 +225,23 @@ class LightsCubit extends Cubit<LightsState> {
         _isThrottled = false;
         callback();
       });
-    }
+
+  // First disable any active LEDs, then apply the preset
+  void applyPreset(LightsState presetState) {
+    _bluetooth.write(
+          3,
+          Constants.allAddresses,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        );
+    emit(presetState);
+    writeBluetooth();
   }
+
 
   // Available delay functions: debounce, throttle
   void writeBluetooth() {
