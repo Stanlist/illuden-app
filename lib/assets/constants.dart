@@ -26,6 +26,9 @@ class Constants {
   static double selectorHorizontalPadding = 90;
   static double selectorVerticalPadding = 30;
   static int debounceTimerDuration = 100;
+<<<<<<< HEAD
   static int throttleTimerDuration = 200;
+=======
+>>>>>>> 17336a3 (Replace throttle behaviour with debounce for lights cubit bluetooth write)
 }
 
