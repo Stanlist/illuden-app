@@ -6,12 +6,12 @@ import 'module.dart';
 import 'package:illuden/assets/constants.dart';
 import 'package:flutter/material.dart';
 
-
 class LightsCubit extends Cubit<LightsState> {
   final BluetoothCubit _bluetooth;
-  Timer? _throttleTimer;
-  static final _throttleDuration = Duration(milliseconds: Constants.throttleTimerDuration);
-  bool _isThrottled = false;
+  Timer? _debounceTimer;
+  static final _debounceDuration =
+      Duration(milliseconds: Constants.debounceTimerDuration);
+
   LightsCubit(Module module, this._bluetooth)
       : super(LightsState(module: module));
 
@@ -25,8 +25,6 @@ class LightsCubit extends Cubit<LightsState> {
 
   // Maps desired brightness and temperature to LED intensities
   void setWhiteLEDValues() {
-
-    // Half actual intensity for safety
     int brightness = state.module.brightness;
     int temperature = state.module.temperature;
     int i_low = 0;
@@ -36,7 +34,6 @@ class LightsCubit extends Cubit<LightsState> {
     int t_high = 0;
 
     if (state.module.isON) {
-      
       // Determine the two closest temperature LEDs
       if (temperature <= 5000) {
         t_low = 2700;
@@ -58,12 +55,12 @@ class LightsCubit extends Cubit<LightsState> {
           i_low = (brightness / (1 + ratio)).toInt();
           i_mid = ((brightness * ratio) / (1 + ratio)).toInt();
         } else {
-          i_mid = (brightness / (1 + ratio)).toInt(); 
+          i_mid = (brightness / (1 + ratio)).toInt();
           i_high = ((brightness * ratio) / (1 + ratio)).toInt();
         }
       }
     }
-    
+
     updateLED('2700', i_low);
     updateLED('5000', i_mid);
     updateLED('6500', i_high);
@@ -104,6 +101,7 @@ class LightsCubit extends Cubit<LightsState> {
     setWhiteLEDValues();
     print("temp: ${state.module.temperature}");
   }
+
   void updateRgb(Color color) {
     // Extracting RGB values from the Color object
     final int red = color.red;
@@ -117,7 +115,7 @@ class LightsCubit extends Cubit<LightsState> {
     setWhiteLEDValues();
     print("RGB: ${state.module.LEDs['RGB']}");
   }
-  
+
   void updateConnectionStatus(bool isConnected) {
     emit(state.copyWith(
       module: state.module.copyWith(isConnected: isConnected),
@@ -129,12 +127,15 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(selectedSections: newSelection));
     // print("selected Sections: ${state.selectedSections}");
   }
-  bool noSelectedModules(){
+
+  bool noSelectedModules() {
     return state.selectedSections.isEmpty;
   }
+
   bool isIndirectSelected() {
     return state.selectedSections.contains(15);
   }
+
   void toggleIndirect() {
     // Create a new list from the current selected sections.
     List<int> updatedSelections = List.from(state.selectedSections);
@@ -158,9 +159,9 @@ class LightsCubit extends Cubit<LightsState> {
     ));
     print("Emitting:\n "
         "sections = $updatedSelections\n"
-        "addresses = $updatedAddresses \n"
-    );
+        "addresses = $updatedAddresses \n");
   }
+
   void updateSelectedModules(int section) {
     final Set<int> centerSection = {0, 1, 2, 3, 4};
     List<int> updatedSelections = List.from(state.selectedSections);
@@ -189,28 +190,28 @@ class LightsCubit extends Cubit<LightsState> {
         "sections = $updatedSelections\n"
         "addresses = $updatedAddresses \n"
         "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
-    );
+        );
 
     emit(state.copyWith(
         selectedSections: updatedSelections,
         selectedAddresses: updatedAddresses));
   }
+
   void selectAll() {
-      emit(state.copyWith(
+    emit(state.copyWith(
         selectedSections: List<int>.from(Constants.allSections),
         selectedAddresses: sectionsToAddresses(Constants.allSections)));
-            print("Emitting:\n "
-        "sections = ${state.selectedSections}\n"
-        "addresses = ${state.selectedAddresses} \n"
-    );
+    // print("Emitting:\n "
+    //     "sections = ${state.selectedSections}\n"
+    //     "addresses = ${state.selectedAddresses} \n");
   }
 
   void deselectAll() {
     emit(state.copyWith(
-      selectedSections: [],
-      selectedAddresses: sectionsToAddresses([])));
+        selectedSections: [], selectedAddresses: sectionsToAddresses([])));
     print("Selected Addresses: ${state.selectedAddresses}");
   }
+
   List<int> sectionsToAddresses(List<int> sections) {
     List<int> selectedAddresses = [];
 
@@ -228,12 +229,8 @@ class LightsCubit extends Cubit<LightsState> {
 
   // Takes the current module state and write to bluetooth
   void writeBluetooth() {
-    if (_isThrottled) {
-      return;
-    }
-    _isThrottled = true;
-    _throttleTimer = Timer(_throttleDuration, () {
-      _isThrottled = false;
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(_debounceDuration, () {
       List<int> selectedAddresses = state.selectedAddresses;
       Map<String, dynamic> ledValues = state.module.LEDs;
       print("LED Values: $ledValues");
@@ -266,5 +263,11 @@ class LightsCubit extends Cubit<LightsState> {
         );
       }
     });
+  }
+
+  @override
+  Future<void> close() {
+    _debounceTimer?.cancel();
+    return super.close();
   }
 }
