@@ -1,6 +1,7 @@
 // Copyright 2017-2023, Charles Weinberger & Paul DeMarco.
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+import 'package:flutter/services.dart';
 import 'utils/lights/lights.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,14 @@ import 'package:illuden/widgets/bluetooth/cubit/bluetooth_cubit.dart';
 import 'pages/page1.dart';
 
 void main() {
-  FlutterBluePlus.setLogLevel(LogLevel.verbose, color: true);
-  runApp(const IlludenApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    FlutterBluePlus.setLogLevel(LogLevel.verbose, color: true);
+    runApp(const IlludenApp());
+  });
 }
 class IlludenApp extends StatelessWidget {
   const IlludenApp({super.key});
