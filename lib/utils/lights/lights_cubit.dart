@@ -227,6 +227,11 @@ class LightsCubit extends Cubit<LightsState> {
     writeBluetooth();
   }
 
+  void debounce(VoidCallback callback) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(_debounceDuration, callback);
+  }
+
   void throttle(VoidCallback callback) {
     if (!_isThrottled) {
       _isThrottled = true;

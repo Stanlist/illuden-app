@@ -50,9 +50,6 @@ class LightsState extends Equatable {
   }
   @override
   List<Object> get props => [module, selectedSections, selectedAddresses];
-<<<<<<< HEAD
-}
-=======
 }
 
 // Simple Light Presets
@@ -123,4 +120,3 @@ final resetLightPreset = LightsState(
   selectedSections: Constants.allSections,
   selectedAddresses: Constants.allAddresses,
 );
->>>>>>> 0842447 (Implement simple presets)
