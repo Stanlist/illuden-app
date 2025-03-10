@@ -8,6 +8,12 @@ import 'package:flutter/material.dart';
 
 class LightsCubit extends Cubit<LightsState> {
   final BluetoothCubit _bluetooth;
+  
+  Timer? _throttleTimer;
+  static final _throttleDuration =
+      Duration(milliseconds: Constants.throttleTimerDuration);
+  bool _isThrottled = false;
+
   Timer? _debounceTimer;
   static final _debounceDuration =
       Duration(milliseconds: Constants.debounceTimerDuration);
@@ -109,7 +115,7 @@ class LightsCubit extends Cubit<LightsState> {
     updatedLEDs['RGB'] = [red, green, blue];
 
     emit(state.copyWith(module: state.module.copyWith(LEDs: updatedLEDs)));
-    setWhiteLEDValues();
+    writeBluetooth();
   }
 
   void updateConnectionStatus(bool isConnected) {
@@ -223,9 +229,24 @@ class LightsCubit extends Cubit<LightsState> {
   }
 
   // Takes the current module state and write to bluetooth
-  void writeBluetooth() {
+  void debounce(VoidCallback callback) {
     _debounceTimer?.cancel();
-    _debounceTimer = Timer(_debounceDuration, () {
+    _debounceTimer = Timer(_debounceDuration, callback);
+  }
+
+  void throttle(VoidCallback callback) {
+    if (!_isThrottled) {
+      _isThrottled = true;
+      _throttleTimer = Timer(_throttleDuration, () {
+        _isThrottled = false;
+        callback();
+      });
+    }
+  }
+
+  // Available delay functions: debounce, throttle
+  void writeBluetooth() {
+    debounce(() {
       List<int> selectedAddresses = state.selectedAddresses;
       Map<String, dynamic> ledValues = state.module.LEDs;
       print("LED Values: $ledValues");
@@ -263,6 +284,7 @@ class LightsCubit extends Cubit<LightsState> {
   @override
   Future<void> close() {
     _debounceTimer?.cancel();
+    _throttleTimer?.cancel();
     return super.close();
   }
 }
