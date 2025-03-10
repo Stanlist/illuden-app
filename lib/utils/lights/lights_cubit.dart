@@ -124,7 +124,6 @@ class LightsCubit extends Cubit<LightsState> {
   void overwriteSelectedModules(List<int> newSelection) {
     print("new selection: $newSelection");
     emit(state.copyWith(selectedSections: newSelection));
-    // print("selected Sections: ${state.selectedSections}");
   }
 
   bool noSelectedModules() {
@@ -185,12 +184,6 @@ class LightsCubit extends Cubit<LightsState> {
       }
     }
     List<int> updatedAddresses = sectionsToAddresses(updatedSelections);
-    print("Emitting:\n "
-        "sections = $updatedSelections\n"
-        "addresses = $updatedAddresses \n"
-        "hex: ${updatedAddresses.map((e) => e.toRadixString(16)).toList()}" // use this when converting to hex, currently left as int for debugging
-        );
-
     emit(state.copyWith(
         selectedSections: updatedSelections,
         selectedAddresses: updatedAddresses));
@@ -200,15 +193,11 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
         selectedSections: List<int>.from(Constants.allSections),
         selectedAddresses: sectionsToAddresses(Constants.allSections)));
-    // print("Emitting:\n "
-    //     "sections = ${state.selectedSections}\n"
-    //     "addresses = ${state.selectedAddresses} \n");
   }
 
   void deselectAll() {
     emit(state.copyWith(
         selectedSections: [], selectedAddresses: sectionsToAddresses([])));
-    print("Selected Addresses: ${state.selectedAddresses}");
   }
 
   List<int> sectionsToAddresses(List<int> sections) {
@@ -247,12 +236,11 @@ class LightsCubit extends Cubit<LightsState> {
     debounce(() {
       List<int> selectedAddresses = state.selectedAddresses;
       Map<String, dynamic> ledValues = state.module.LEDs;
-      print("LED Values: $ledValues");
+      state.debugPrintState();
 
       // call BluetoothCubit write function to perform identical write
       if (state.module.isON) {
         bool isRGB = state.module.isRGBmode;
-        print("RGB: $isRGB");
         _bluetooth.write(
           3,
           selectedAddresses,
