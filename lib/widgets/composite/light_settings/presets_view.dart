@@ -4,7 +4,7 @@ import 'package:illuden/utils/lights/lights_cubit.dart';
 import 'package:illuden/utils/lights/lights_state.dart';
 
 class PresetsView extends StatelessWidget {
-  const PresetsView({Key? key}) : super(key: key);
+  const PresetsView({super.key});
 
   @override
   Widget build(BuildContext context) {

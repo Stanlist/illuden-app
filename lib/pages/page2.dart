@@ -30,7 +30,6 @@ class Page2 extends StatelessWidget {
               BrightnessView(),
               const SizedBox(height: 10),
               Page2PowerView(),
-              const SizedBox(height: 10),
             ],
           );
         },
