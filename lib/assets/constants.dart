@@ -28,4 +28,3 @@ class Constants {
   static int debounceTimerDuration = 100;
   static int throttleTimerDuration = 200;
 }
-
