@@ -117,7 +117,7 @@ final resetLightPreset = LightsState(
       'RGB': [0, 0, 0],
     },
     isON: true,
-    isRGBmode: true,
+    isRGBmode: false,
     brightness: 2,
   ),
   selectedSections: Constants.allSections,
