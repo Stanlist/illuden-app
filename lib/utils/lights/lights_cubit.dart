@@ -78,14 +78,12 @@ class LightsCubit extends Cubit<LightsState> {
       module: state.module.copyWith(brightness: brightness),
     ));
     setWhiteLEDValues();
-    print("brightness: ${state.module.brightness}");
   }
 
   void switchMode(bool isRGB) {
     emit(state.copyWith(
       module: state.module.copyWith(isRGBmode: isRGB),
     ));
-    print("isRGBmode: ${state.module.isRGBmode}");
   }
 
   void updateLED(String key, dynamic value) {
