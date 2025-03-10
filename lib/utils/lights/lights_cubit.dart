@@ -113,6 +113,7 @@ class LightsCubit extends Cubit<LightsState> {
 
     emit(state.copyWith(module: state.module.copyWith(LEDs: updatedLEDs)));
     writeBluetooth();
+
   }
 
   void updateConnectionStatus(bool isConnected) {
@@ -191,6 +192,7 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       selectedSections: [],
       selectedAddresses: sectionsToAddresses([])));
+
   }
 
   List<int> sectionsToAddresses(List<int> sections) {
