@@ -20,7 +20,6 @@ class LightsCubit extends Cubit<LightsState> {
       module: state.module.copyWith(isON: !state.module.isON),
     ));
     setWhiteLEDValues();
-    print("isON: ${state.module.isON}");
   }
 
   // Maps desired brightness and temperature to LED intensities
@@ -68,8 +67,6 @@ class LightsCubit extends Cubit<LightsState> {
     updateLED('5000', i_mid);
     updateLED('6500', i_high);
     writeBluetooth();
-
-    print("LEDs set to: ${state.module.LEDs}");
   }
 
   void setBrightness(int brightness) {
@@ -115,7 +112,6 @@ class LightsCubit extends Cubit<LightsState> {
 
     emit(state.copyWith(module: state.module.copyWith(LEDs: updatedLEDs)));
     setWhiteLEDValues();
-    print("RGB: ${state.module.LEDs['RGB']}");
   }
   
   void updateConnectionStatus(bool isConnected) {
@@ -123,7 +119,6 @@ class LightsCubit extends Cubit<LightsState> {
       module: state.module.copyWith(isConnected: isConnected),
     ));
   }
-
   void overwriteSelectedModules(List<int> newSelection) {
     print("new selection: $newSelection");
     emit(state.copyWith(selectedSections: newSelection));
