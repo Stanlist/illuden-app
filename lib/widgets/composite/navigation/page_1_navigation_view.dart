@@ -3,7 +3,7 @@ import 'package:illuden/pages/page2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:illuden/utils/lights/lights.dart';
 import 'package:illuden/widgets/atomic/navigation_button.dart';
-
+import 'package:illuden/widgets/atomic/light_settings/select_indirect.dart';
 class Page1NavigationView extends StatelessWidget {
   const Page1NavigationView({super.key});
 
@@ -12,6 +12,7 @@ class Page1NavigationView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SelectIndirect(),
         Expanded(child: Container()),
         BlocBuilder<LightsCubit, LightsState>(
           builder: (context, state) {

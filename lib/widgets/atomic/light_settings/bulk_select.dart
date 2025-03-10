@@ -2,7 +2,7 @@ import 'package:illuden/utils/lights/lights.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:illuden/assets/constants.dart';
-
+import 'package:illuden/theme/button_styles.dart';
 
 // class BulkSelectToggle extends StatelessWidget {
 //   const BulkSelectToggle({Key? key}) : super(key: key);
@@ -54,20 +54,6 @@ import 'package:illuden/assets/constants.dart';
 class SelectDeselectButtons extends StatelessWidget {
   const SelectDeselectButtons({Key? key}) : super(key: key);
   // Utility function to create the button style
-  ButtonStyle _buttonStyle(BuildContext context, bool isEnabled) {
-    return TextButton.styleFrom(
-      foregroundColor: isEnabled
-          ? Theme.of(context).colorScheme.onPrimary
-          : Theme.of(context).colorScheme.secondaryFixedDim,
-      splashFactory: NoSplash.splashFactory,
-      backgroundColor: isEnabled
-          ? Theme.of(context).colorScheme.primary.withOpacity(0.9)
-          : Theme.of(context).colorScheme.surfaceDim,
-       minimumSize: const Size(105.0, 36.0),
-      textStyle: TextStyle(fontSize: 14),
-      );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LightsCubit, LightsState>(
@@ -83,7 +69,7 @@ class SelectDeselectButtons extends StatelessWidget {
               onPressed: isSelectAllAvailable
                   ? () => context.read<LightsCubit>().selectAll()
                   : null,
-              style: _buttonStyle(context, isSelectAllAvailable),
+                style: ButtonStyles.selectButton(context, isEnabled: isSelectAllAvailable), // previously_buttonStyle(context, isSelectAllAvailable),
               child: const Text('Select All'),
             ),
 
@@ -93,7 +79,7 @@ class SelectDeselectButtons extends StatelessWidget {
               onPressed: isDeselectAllAvailable
                   ? () => context.read<LightsCubit>().deselectAll()
                   : null,
-              style: _buttonStyle(context, isDeselectAllAvailable),
+              style: ButtonStyles.selectButton(context, isEnabled: isDeselectAllAvailable),
               child: const Text('Deselect All'),
             ),
           ],
