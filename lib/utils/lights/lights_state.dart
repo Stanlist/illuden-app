@@ -24,7 +24,21 @@ class LightsState extends Equatable {
       selectedAddresses: selectedAddresses ?? List.from(this.selectedAddresses),
     );
   }
-  void debugPrintState() {
+  void debugPrintState({bool printSelections = true, bool printLEDsState = true}) {
+    if (printSelections) {
+      debugPrintSelections();
+    }
+    if (printLEDsState) {
+      debugPrintLEDsState();
+    }
+  }
+  void debugPrintSelections() {
+    print("Selections: ");
+    print("  sections = $selectedSections");
+    print("  addresses = $selectedAddresses");
+    print("  hex =  ${selectedAddresses.map((e) => e.toRadixString(16)).toList()}");
+  }
+  void debugPrintLEDsState(){
     print("LEDModule State: {");
     print("  temperature: ${module.temperature}");
     print("  LEDs: ${module.LEDs}");
@@ -36,4 +50,3 @@ class LightsState extends Equatable {
   @override
   List<Object> get props => [module, selectedSections, selectedAddresses];
 }
-

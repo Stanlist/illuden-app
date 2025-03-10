@@ -15,16 +15,16 @@ class Constants {
     12: [44, 45, 46, 47],
     13: [48, 49, 50, 51],
     14: [52, 53, 54, 55],
-    16: [56, 57, 58, 59, 60], // top 
+    15: [56, 57, 58, 59, 60], // top 
   };
   static int totalModules = 45;
-  static int totalSections = 17;
-  static List<int> allSections = List.generate(17, (i) => i);
+  static int totalSections = 16;
+  static List<int> allSections = List.generate(16, (i) => i);
   static List<int> allAddresses = List<int>.generate(45, (i) => i + 16);
   static double selectorWidth = 250;
   static double selectorHeight = 300;
   static double selectorHorizontalPadding = 90;
   static double selectorVerticalPadding = 30;
+  static int debounceTimerDuration = 100;
   static int throttleTimerDuration = 200;
 }
-
