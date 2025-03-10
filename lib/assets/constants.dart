@@ -27,8 +27,12 @@ class Constants {
   static double selectorVerticalPadding = 30;
   static int debounceTimerDuration = 100;
 <<<<<<< HEAD
+<<<<<<< HEAD
   static int throttleTimerDuration = 200;
 =======
 >>>>>>> 17336a3 (Replace throttle behaviour with debounce for lights cubit bluetooth write)
+=======
+  static int throttleTimerDuration = 200;
+>>>>>>> 7b7e337 (Fix incorrect function call in updateRgb, decouple debouce/throttle function)
 }
 
