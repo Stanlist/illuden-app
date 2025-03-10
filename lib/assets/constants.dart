@@ -26,5 +26,6 @@ class Constants {
   static double selectorHorizontalPadding = 90;
   static double selectorVerticalPadding = 30;
   static int debounceTimerDuration = 100;
+  static int throttleTimerDuration = 200;
 }
 
