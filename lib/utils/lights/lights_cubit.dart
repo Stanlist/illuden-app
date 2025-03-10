@@ -29,44 +29,44 @@ class LightsCubit extends Cubit<LightsState> {
     // Half actual intensity for safety
     int brightness = state.module.brightness;
     int temperature = state.module.temperature;
-    int i_low = 0;
-    int i_mid = 0;
-    int i_high = 0;
-    int t_low = 0;
-    int t_high = 0;
+    int iLow = 0;
+    int iMid = 0;
+    int iHigh = 0;
+    int tLow = 0;
+    int tHigh = 0;
 
     if (state.module.isON) {
       
       // Determine the two closest temperature LEDs
       if (temperature <= 5000) {
-        t_low = 2700;
-        t_high = 5000;
+        tLow = 2700;
+        tHigh = 5000;
       } else {
-        t_low = 5000;
-        t_high = 6500;
+        tLow = 5000;
+        tHigh = 6500;
       }
 
       // Calculate brightness for each LED.
       if (temperature == 5000) {
-        i_mid = brightness;
+        iMid = brightness;
       } else if (temperature == 6500) {
-        i_high = brightness;
+        iHigh = brightness;
       } else {
-        double ratio = (temperature - t_low) / (t_high - temperature);
+        double ratio = (temperature - tLow) / (tHigh - temperature);
 
         if (temperature < 5000) {
-          i_low = (brightness / (1 + ratio)).toInt();
-          i_mid = ((brightness * ratio) / (1 + ratio)).toInt();
+          iLow = (brightness / (1 + ratio)).toInt();
+          iMid = ((brightness * ratio) / (1 + ratio)).toInt();
         } else {
-          i_mid = (brightness / (1 + ratio)).toInt(); 
-          i_high = ((brightness * ratio) / (1 + ratio)).toInt();
+          iMid = (brightness / (1 + ratio)).toInt(); 
+          iHigh = ((brightness * ratio) / (1 + ratio)).toInt();
         }
       }
     }
     
-    updateLED('2700', i_low);
-    updateLED('5000', i_mid);
-    updateLED('6500', i_high);
+    updateLED('2700', iLow);
+    updateLED('5000', iMid);
+    updateLED('6500', iHigh);
     writeBluetooth();
 
     print("LEDs set to: ${state.module.LEDs}");
@@ -226,37 +226,9 @@ class LightsCubit extends Cubit<LightsState> {
     // for presets (low)
   }
 
+  // First disable any active LEDs, then apply the preset
   void applyPreset(LightsState presetState) {
-    emit(presetState);
-    writePresetBluetooth();
-  }
-
-  // Takes the current module state and write to bluetooth
-
-  void writePresetBluetooth() {
-    if (_isThrottled) {
-      return;
-    }
-    _isThrottled = true;
-    _throttleTimer = Timer(_throttleDuration, () {
-      _isThrottled = false;
-      List<int> selectedAddresses = state.selectedAddresses;
-      Map<String, dynamic> ledValues = state.module.LEDs;
-      print("LED Values: $ledValues");
-      if (state.module.isON) {
-        _bluetooth.write(
-        3,
-        selectedAddresses,
-        ledValues['2700'],
-        ledValues['5000'],
-        ledValues['6500'],
-        ledValues['RGB'][0],
-        ledValues['RGB'][1],
-        ledValues['RGB'][2],
-        );
-      } else {
-        // If module is off, turn off all LEDs
-        _bluetooth.write(
+    _bluetooth.write(
           3,
           Constants.allAddresses,
           0,
@@ -266,8 +238,8 @@ class LightsCubit extends Cubit<LightsState> {
           0,
           0,
         );
-      }
-    });
+    emit(presetState);
+    writeBluetooth();
   }
 
   void writeBluetooth() {
