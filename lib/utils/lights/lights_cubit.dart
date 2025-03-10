@@ -100,7 +100,6 @@ class LightsCubit extends Cubit<LightsState> {
       module: state.module.copyWith(temperature: temp),
     ));
     setWhiteLEDValues();
-    print("temp: ${state.module.temperature}");
   }
 
   void updateRgb(Color color) {
@@ -120,10 +119,6 @@ class LightsCubit extends Cubit<LightsState> {
     emit(state.copyWith(
       module: state.module.copyWith(isConnected: isConnected),
     ));
-  }
-  void overwriteSelectedModules(List<int> newSelection) {
-    print("new selection: $newSelection");
-    emit(state.copyWith(selectedSections: newSelection));
   }
 
   bool noSelectedModules() {
@@ -155,9 +150,6 @@ class LightsCubit extends Cubit<LightsState> {
       selectedSections: updatedSelections,
       selectedAddresses: updatedAddresses,
     ));
-    print("Emitting:\n "
-        "sections = $updatedSelections\n"
-        "addresses = $updatedAddresses \n");
   }
 
   void updateSelectedModules(int section) {
