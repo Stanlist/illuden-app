@@ -120,15 +120,6 @@ class LightsCubit extends Cubit<LightsState> {
       module: state.module.copyWith(isConnected: isConnected),
     ));
   }
-<<<<<<< HEAD
-
-=======
-  void overwriteSelectedModules(List<int> newSelection) {
-    print("new selection: $newSelection");
-    emit(state.copyWith(selectedSections: newSelection));
-    // print("selected Sections: ${state.selectedSections}");
-  }
->>>>>>> 199178b (removing print statemnts)
 
   bool noSelectedModules(){
     return state.selectedSections.isEmpty;
@@ -185,7 +176,6 @@ class LightsCubit extends Cubit<LightsState> {
       }
     }
     List<int> updatedAddresses = sectionsToAddresses(updatedSelections);
-
     emit(state.copyWith(
         selectedSections: updatedSelections,
         selectedAddresses: updatedAddresses));
