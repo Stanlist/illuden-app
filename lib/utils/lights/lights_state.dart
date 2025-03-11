@@ -74,7 +74,7 @@ final directionalLightPreset = LightsState(
   module: Module(
     temperature: 3000,
     LEDs: {
-      '2700': 80,
+      '2700': 0,
       '5000': 80,
       '6500': 80,
       'RGB': [0, 0, 0],
@@ -83,39 +83,39 @@ final directionalLightPreset = LightsState(
     isRGBmode: false,
     brightness: 80,
   ),
-  selectedSections: [7, 12],
-  selectedAddresses: [27, 28, 29, 44, 45, 46, 47],
+  selectedSections: [7],
+  selectedAddresses: [27, 28, 29],
 );
 
 final moodLightPreset = LightsState(
   module: Module(
     temperature: 3000,
     LEDs: {
-      '2700': 0,
-      '5000': 80,
+      '2700': 10,
+      '5000': 2,
       '6500': 0,
       'RGB': [0, 0, 0],
     },
     isON: true,
     isRGBmode: false,
-    brightness: 80,
+    brightness: 10,
   ),
-  selectedSections: [15],
-  selectedAddresses: [56, 57, 58, 59, 60],
+  selectedSections: Constants.allSections,
+  selectedAddresses: Constants.allAddresses,
 );
 
 final resetLightPreset = LightsState(
   module: Module(
     temperature: 5000,
     LEDs: {
-      '2700': 2,
-      '5000': 2,
-      '6500': 2,
+      '2700': 5,
+      '5000': 5,
+      '6500': 5,
       'RGB': [0, 0, 0],
     },
     isON: true,
     isRGBmode: false,
-    brightness: 2,
+    brightness: 5,
   ),
   selectedSections: Constants.allSections,
   selectedAddresses: Constants.allAddresses,
