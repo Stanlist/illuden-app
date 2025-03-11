@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:illuden/assets/constants.dart';
 import 'module.dart';
 
 class LightsState extends Equatable {
@@ -50,3 +51,72 @@ class LightsState extends Equatable {
   @override
   List<Object> get props => [module, selectedSections, selectedAddresses];
 }
+
+// Simple Light Presets
+final taskLightPreset = LightsState(
+  module: Module(
+    temperature: 5000,
+    LEDs: {
+      '2700': 80,
+      '5000': 80,
+      '6500': 80,
+      'RGB': [0, 0, 0],
+    },
+    isON: true,
+    isRGBmode: false,
+    brightness: 80,
+  ),
+  selectedSections: [0, 1, 2, 3, 4],
+  selectedAddresses: [16, 17, 18, 19, 20],
+);
+
+final directionalLightPreset = LightsState(
+  module: Module(
+    temperature: 3000,
+    LEDs: {
+      '2700': 0,
+      '5000': 80,
+      '6500': 80,
+      'RGB': [0, 0, 0],
+    },
+    isON: true,
+    isRGBmode: false,
+    brightness: 80,
+  ),
+  selectedSections: [7],
+  selectedAddresses: [27, 28, 29],
+);
+
+final moodLightPreset = LightsState(
+  module: Module(
+    temperature: 3000,
+    LEDs: {
+      '2700': 10,
+      '5000': 2,
+      '6500': 0,
+      'RGB': [0, 0, 0],
+    },
+    isON: true,
+    isRGBmode: false,
+    brightness: 10,
+  ),
+  selectedSections: Constants.allSections,
+  selectedAddresses: Constants.allAddresses,
+);
+
+final resetLightPreset = LightsState(
+  module: Module(
+    temperature: 5000,
+    LEDs: {
+      '2700': 5,
+      '5000': 5,
+      '6500': 5,
+      'RGB': [0, 0, 0],
+    },
+    isON: true,
+    isRGBmode: false,
+    brightness: 5,
+  ),
+  selectedSections: Constants.allSections,
+  selectedAddresses: Constants.allAddresses,
+);
