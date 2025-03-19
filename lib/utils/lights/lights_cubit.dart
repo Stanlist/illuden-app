@@ -227,6 +227,14 @@ class LightsCubit extends Cubit<LightsState> {
     writeBluetooth();
   }
 
+  // Allows light to follow circadian rhythm preset
+  void circadianPreset() {
+    int duration = 1;
+    Timer.periodic(Duration(seconds: duration), (timer) {
+      // togglePower();
+    });
+  }
+
   void debounce(VoidCallback callback) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(_debounceDuration, callback);

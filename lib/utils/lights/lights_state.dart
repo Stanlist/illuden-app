@@ -7,22 +7,25 @@ class LightsState extends Equatable {
   final Module module;
   final List<int> selectedSections;
   final List<int> selectedAddresses;
+  final bool isCircadian;
   LightsState({
     required this.module,
     this.selectedSections = const <int>[],
     this.selectedAddresses = const <int>[],
+    this.isCircadian = false,
   });
-
 
   LightsState copyWith({
     Module? module, 
     List<int>? selectedSections,
     List<int>? selectedAddresses, 
+    bool? isCircadian,
   }) {
     return LightsState(
       module: module ?? this.module,
       selectedSections: selectedSections ?? List.from(this.selectedSections),
       selectedAddresses: selectedAddresses ?? List.from(this.selectedAddresses),
+      isCircadian: isCircadian ?? this.isCircadian,
     );
   }
   void debugPrintState({bool printSelections = true, bool printLEDsState = true}) {
@@ -46,10 +49,11 @@ class LightsState extends Equatable {
     print("  isON: ${module.isON}");
     print("  isRGBmode: ${module.isRGBmode}");
     print("  brightness: ${module.brightness}");
+    print("  isCircadian: $isCircadian");
     print("}");
   }
   @override
-  List<Object> get props => [module, selectedSections, selectedAddresses];
+  List<Object> get props => [module, selectedSections, selectedAddresses, isCircadian];
 }
 
 // Simple Light Presets
