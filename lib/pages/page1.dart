@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 // import 'package:illuden/widgets/bluetooth/cubit/bluetooth_single_write.dart';
 import 'package:illuden/widgets/bluetooth/bluetooth_bar_view.dart';
+import 'package:illuden/widgets/composite/light_settings/circadian_view.dart';
 import 'package:illuden/widgets/composite/light_settings/presets_view.dart';
 import 'package:illuden/widgets/composite/light_settings/sections_view.dart';
 import 'package:illuden/widgets/composite/light_settings/brightness_view.dart';
@@ -21,10 +22,12 @@ class Page1 extends StatelessWidget {
         SectionsView(),
         const SizedBox(height: 5),
         BrightnessView(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 15),
         Page1PowerView(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 15),
         PresetsView(),
+        const SizedBox(height: 15),
+        CircadianView(),
       ],
       ),
     );

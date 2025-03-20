@@ -62,6 +62,8 @@ class _RGBSelectorState extends State<RGBSelector> {
             context.read<LightsCubit>().togglePower(); // Assuming you have a method to toggle the lights on
           }
 
+          context.read<LightsCubit>().circadianPreset(toggle: false);
+
           // Update the RGB color in the cubit
           context.read<LightsCubit>().updateRgb(color);
         },

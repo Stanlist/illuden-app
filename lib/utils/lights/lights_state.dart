@@ -7,22 +7,25 @@ class LightsState extends Equatable {
   final Module module;
   final List<int> selectedSections;
   final List<int> selectedAddresses;
+  final bool isCircadian;
   LightsState({
     required this.module,
     this.selectedSections = const <int>[],
     this.selectedAddresses = const <int>[],
+    this.isCircadian = false,
   });
-
 
   LightsState copyWith({
     Module? module, 
     List<int>? selectedSections,
     List<int>? selectedAddresses, 
+    bool? isCircadian,
   }) {
     return LightsState(
       module: module ?? this.module,
       selectedSections: selectedSections ?? List.from(this.selectedSections),
       selectedAddresses: selectedAddresses ?? List.from(this.selectedAddresses),
+      isCircadian: isCircadian ?? this.isCircadian,
     );
   }
   void debugPrintState({bool printSelections = true, bool printLEDsState = true}) {
@@ -46,10 +49,11 @@ class LightsState extends Equatable {
     print("  isON: ${module.isON}");
     print("  isRGBmode: ${module.isRGBmode}");
     print("  brightness: ${module.brightness}");
+    print("  isCircadian: $isCircadian");
     print("}");
   }
   @override
-  List<Object> get props => [module, selectedSections, selectedAddresses];
+  List<Object> get props => [module, selectedSections, selectedAddresses, isCircadian];
 }
 
 // Simple Light Presets
@@ -68,6 +72,7 @@ final taskLightPreset = LightsState(
   ),
   selectedSections: [0, 1, 2, 3, 4],
   selectedAddresses: [0x1A, 0x1C, 0x20, 0x23, 0x38],
+  isCircadian: false,
 );
 
 final directionalLightPreset = LightsState(
@@ -85,6 +90,7 @@ final directionalLightPreset = LightsState(
   ),
   selectedSections: [5, 10],
   selectedAddresses: [0x13, 0x16, 0x11, 0x18, 0x10, 0x3A, 0x3B],
+  isCircadian: false,
 );
 
 final moodLightPreset = LightsState(
@@ -102,6 +108,7 @@ final moodLightPreset = LightsState(
   ),
   selectedSections: Constants.allSections,
   selectedAddresses: Constants.allAddresses,
+  isCircadian: false,
 );
 
 final resetLightPreset = LightsState(
@@ -119,4 +126,5 @@ final resetLightPreset = LightsState(
   ),
   selectedSections: Constants.allSections,
   selectedAddresses: Constants.allAddresses,
+  isCircadian: false,
 );
