@@ -72,6 +72,7 @@ final taskLightPreset = LightsState(
   ),
   selectedSections: [0, 1, 2, 3, 4],
   selectedAddresses: [0x1A, 0x1C, 0x20, 0x23, 0x38],
+  isCircadian: false,
 );
 
 final directionalLightPreset = LightsState(
@@ -89,6 +90,7 @@ final directionalLightPreset = LightsState(
   ),
   selectedSections: [5, 10],
   selectedAddresses: [0x13, 0x16, 0x11, 0x18, 0x10, 0x3A, 0x3B],
+  isCircadian: false,
 );
 
 final moodLightPreset = LightsState(
@@ -106,6 +108,7 @@ final moodLightPreset = LightsState(
   ),
   selectedSections: Constants.allSections,
   selectedAddresses: Constants.allAddresses,
+  isCircadian: false,
 );
 
 final resetLightPreset = LightsState(
@@ -123,4 +126,5 @@ final resetLightPreset = LightsState(
   ),
   selectedSections: Constants.allSections,
   selectedAddresses: Constants.allAddresses,
+  isCircadian: false,
 );
