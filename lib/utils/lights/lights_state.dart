@@ -67,7 +67,7 @@ final taskLightPreset = LightsState(
     brightness: 80,
   ),
   selectedSections: [0, 1, 2, 3, 4],
-  selectedAddresses: [16, 17, 18, 19, 20],
+  selectedAddresses: [0x1A, 0x1C, 0x20, 0x23, 0x38],
 );
 
 final directionalLightPreset = LightsState(
@@ -83,8 +83,8 @@ final directionalLightPreset = LightsState(
     isRGBmode: false,
     brightness: 80,
   ),
-  selectedSections: [7],
-  selectedAddresses: [27, 28, 29],
+  selectedSections: [5, 10],
+  selectedAddresses: [0x13, 0x16, 0x11, 0x18, 0x10, 0x3A, 0x3B],
 );
 
 final moodLightPreset = LightsState(
