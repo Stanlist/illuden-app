@@ -50,7 +50,16 @@ class BluetoothCubit extends Cubit<BluetoothState> {
 
     // Turn on bluetooth if it's not already on (on iOS, user must manually enable bluetooth)
     if (!kIsWeb && Platform.isAndroid) {
+      bool turnedOn = false;
+      while (!turnedOn) {
+      try {
       await FlutterBluePlus.turnOn();
+      turnedOn = true;
+      } catch (e) {
+      print("Error turning on bluetooth: $e");
+      await Future.delayed(const Duration(seconds: 2)); // Wait before retrying
+      }
+      }
     }
 
     _deviceStateSubscription =
