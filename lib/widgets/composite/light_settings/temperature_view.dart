@@ -21,6 +21,7 @@ class TemperatureView extends StatelessWidget {
             child: TemperatureGage(
               temperature: temperature,
               onTemperatureChanged: (value) {
+                context.read<LightsCubit>().circadianPreset(toggle: false);
                 double step = 20;
                 value = (value / step).round() * step;
                   // If close to min or max, snap to the boundary

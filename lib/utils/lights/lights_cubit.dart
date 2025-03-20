@@ -228,11 +228,37 @@ class LightsCubit extends Cubit<LightsState> {
   }
 
   // Allows light to follow circadian rhythm preset
-  void circadianPreset() {
+  Timer? _circadianTimer;
+
+  void circadianPreset({bool toggle = true}) {
     int duration = 1;
-    Timer.periodic(Duration(seconds: duration), (timer) {
-      // togglePower();
-    });
+    bool tempDeltaDir = true;
+    int currTemp = state.module.temperature;
+    
+    if (toggle){
+      emit(state.copyWith(isCircadian: !state.isCircadian)); 
+    } else {
+      emit(state.copyWith(isCircadian: false));
+    }
+
+    if (state.isCircadian) {
+      selectAll();
+      _circadianTimer = Timer.periodic(Duration(seconds: duration), (timer) {
+        if (!state.isCircadian) {
+          _circadianTimer?.cancel();
+        }
+        if (currTemp <= 2700) {
+          tempDeltaDir = true;
+        } else if (currTemp >= 6500) {
+          tempDeltaDir = false;
+        }
+        currTemp += tempDeltaDir ? 100 : -100;
+        updateTemperature(currTemp);
+      });
+    } else {
+      // Cancel the timer if the toggle is off
+      _circadianTimer?.cancel();
+    }
   }
 
   void debounce(VoidCallback callback) {
