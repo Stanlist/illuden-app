@@ -10,17 +10,35 @@ class CircadianView extends StatelessWidget {
     return BlocBuilder<LightsCubit, LightsState>(
       builder: (context, state) {
         bool isCircadian = state.isCircadian;
-        return Switch(
-          value: isCircadian,
-          activeColor: Theme.of(context).colorScheme.primary, // Default Flutter Purple
-          inactiveTrackColor: Colors.grey.shade400,
-          inactiveThumbColor: Colors.grey,
-          onChanged: (bool value) => context.read<LightsCubit>().circadianPreset(),
-          thumbIcon: MaterialStateProperty.all(
-            const Icon(Icons.single_bed, color: Colors.white),
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0), // Add padding if needed
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), // Add rounded corners if desired
+            color: Theme.of(context).colorScheme.primaryContainer, // You can customize the background color
+          ),
+          child: Row(
+            children: [
+              Icon(
+                Icons.today,
+                size: 28,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                'Circadian Lighting',
+                style: TextStyle(fontSize: 16), // Set the desired font size here
+              ),
+              const Expanded(child: SizedBox()),
+              Checkbox(
+                value: isCircadian,
+                onChanged: (bool? value) {
+                  context.read<LightsCubit>().circadianPreset();
+                },
+              ),
+            ],
           ),
         );
-      } 
+      },
     );
   }
 }
