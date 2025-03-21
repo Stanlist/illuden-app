@@ -12,7 +12,7 @@ class Page1NavigationView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SelectIndirect(),
+        // SelectIndirect(),
         Expanded(child: Container()),
         BlocBuilder<LightsCubit, LightsState>(
           builder: (context, state) {
